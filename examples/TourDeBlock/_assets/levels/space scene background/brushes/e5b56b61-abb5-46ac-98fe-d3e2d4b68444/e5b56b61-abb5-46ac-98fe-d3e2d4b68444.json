@@ -1,0 +1,21 @@
+{
+  "id": "e5b56b61-abb5-46ac-98fe-d3e2d4b68444",
+  "title": "",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 46.200000000000387,
+  "sy": 32.700000000000216,
+  "sz": 0.099999999999999367,
+  "rx": 0,
+  "ry": -0.039999999999999987,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/space scene background/brushes/e5b56b61-abb5-46ac-98fe-d3e2d4b68444/LEFT IMAGE.jpg",
+    "_assets/levels/space scene background/brushes/e5b56b61-abb5-46ac-98fe-d3e2d4b68444/RIGHT IMAGE.jpg",
+    "_assets/levels/space scene background/brushes/e5b56b61-abb5-46ac-98fe-d3e2d4b68444/TOP IMAGE.jpg",
+    "_assets/levels/space scene background/brushes/e5b56b61-abb5-46ac-98fe-d3e2d4b68444/BOTTOM IMAGE.jpg",
+    "_assets/levels/space scene background/brushes/e5b56b61-abb5-46ac-98fe-d3e2d4b68444/FRONT IMAGE.png",
+    "_assets/levels/space scene background/brushes/e5b56b61-abb5-46ac-98fe-d3e2d4b68444/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "space scene background"
+}

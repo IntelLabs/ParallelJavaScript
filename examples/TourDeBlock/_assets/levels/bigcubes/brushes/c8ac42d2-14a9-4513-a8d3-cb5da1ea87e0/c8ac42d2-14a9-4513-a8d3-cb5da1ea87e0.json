@@ -1,0 +1,21 @@
+{
+  "id": "c8ac42d2-14a9-4513-a8d3-cb5da1ea87e0",
+  "mass": "1",
+  "pointValue": "1",
+  "sx": 12.299999999999971,
+  "sy": 10,
+  "sz": 12.499999999999972,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/bigcubes/brushes/c8ac42d2-14a9-4513-a8d3-cb5da1ea87e0/LEFT IMAGE.jpg",
+    "_assets/levels/bigcubes/brushes/c8ac42d2-14a9-4513-a8d3-cb5da1ea87e0/RIGHT IMAGE.jpg",
+    "_assets/levels/bigcubes/brushes/c8ac42d2-14a9-4513-a8d3-cb5da1ea87e0/TOP IMAGE.jpg",
+    "_assets/levels/bigcubes/brushes/c8ac42d2-14a9-4513-a8d3-cb5da1ea87e0/BOTTOM IMAGE.jpg",
+    "_assets/levels/bigcubes/brushes/c8ac42d2-14a9-4513-a8d3-cb5da1ea87e0/FRONT IMAGE.jpg",
+    "_assets/levels/bigcubes/brushes/c8ac42d2-14a9-4513-a8d3-cb5da1ea87e0/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "bigcubes"
+}

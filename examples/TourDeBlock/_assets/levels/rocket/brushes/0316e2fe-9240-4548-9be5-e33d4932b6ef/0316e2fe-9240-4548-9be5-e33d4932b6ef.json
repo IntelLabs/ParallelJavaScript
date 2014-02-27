@@ -1,0 +1,21 @@
+{
+  "id": "0316e2fe-9240-4548-9be5-e33d4932b6ef",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 3.4999999999999991,
+  "sy": 3.9000000000000212,
+  "sz": 3.4000000000000012,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/rocket/brushes/0316e2fe-9240-4548-9be5-e33d4932b6ef/LEFT IMAGE.jpg",
+    "_assets/levels/rocket/brushes/0316e2fe-9240-4548-9be5-e33d4932b6ef/RIGHT IMAGE.jpg",
+    "_assets/levels/rocket/brushes/0316e2fe-9240-4548-9be5-e33d4932b6ef/TOP IMAGE.jpg",
+    "_assets/levels/rocket/brushes/0316e2fe-9240-4548-9be5-e33d4932b6ef/BOTTOM IMAGE.jpg",
+    "_assets/levels/rocket/brushes/0316e2fe-9240-4548-9be5-e33d4932b6ef/FRONT IMAGE.jpg",
+    "_assets/levels/rocket/brushes/0316e2fe-9240-4548-9be5-e33d4932b6ef/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "rocket"
+}

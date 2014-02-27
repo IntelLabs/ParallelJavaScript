@@ -1,0 +1,21 @@
+{
+  "id": "fcbde149-0dad-45fd-8b0a-d61d0119a2b8",
+  "title": "",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 17.199999999999974,
+  "sy": 10,
+  "sz": 0.099999999999999367,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/CircusBack001/brushes/fcbde149-0dad-45fd-8b0a-d61d0119a2b8/LEFT IMAGE.jpg",
+    "_assets/levels/CircusBack001/brushes/fcbde149-0dad-45fd-8b0a-d61d0119a2b8/RIGHT IMAGE.jpg",
+    "_assets/levels/CircusBack001/brushes/fcbde149-0dad-45fd-8b0a-d61d0119a2b8/TOP IMAGE.jpg",
+    "_assets/levels/CircusBack001/brushes/fcbde149-0dad-45fd-8b0a-d61d0119a2b8/BOTTOM IMAGE.jpg",
+    "_assets/levels/CircusBack001/brushes/fcbde149-0dad-45fd-8b0a-d61d0119a2b8/FRONT IMAGE.png",
+    "_assets/levels/CircusBack001/brushes/fcbde149-0dad-45fd-8b0a-d61d0119a2b8/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "CircusBack001"
+}

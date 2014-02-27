@@ -1,0 +1,22 @@
+{
+  "id": "81f8a470-d657-4385-9aff-08192e9f6eee",
+  "title": "",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/JungleBack001/brushes/81f8a470-d657-4385-9aff-08192e9f6eee/LEFT IMAGE.jpg",
+    "_assets/levels/JungleBack001/brushes/81f8a470-d657-4385-9aff-08192e9f6eee/RIGHT IMAGE.jpg",
+    "_assets/levels/JungleBack001/brushes/81f8a470-d657-4385-9aff-08192e9f6eee/TOP IMAGE.jpg",
+    "_assets/levels/JungleBack001/brushes/81f8a470-d657-4385-9aff-08192e9f6eee/BOTTOM IMAGE.jpg",
+    "_assets/levels/JungleBack001/brushes/81f8a470-d657-4385-9aff-08192e9f6eee/FRONT IMAGE.png",
+    "_assets/levels/JungleBack001/brushes/81f8a470-d657-4385-9aff-08192e9f6eee/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "JungleBack001",
+  "prefix": "_assets/levels/JungleBack001/brushes/81f8a470-d657-4385-9aff-08192e9f6eee"
+}

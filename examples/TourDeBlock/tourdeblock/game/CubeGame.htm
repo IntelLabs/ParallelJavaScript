@@ -1,0 +1,633 @@
+﻿<html>
+<head>
+    <title>Block Test</title>
+ <link href="../com/Designer.css" rel="stylesheet" type="text/css"/>   
+<!-- OCL FILES -->
+
+    <script type="text/javascript" src="../lib/intel/ParallelArray.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/narcissus/jsdefs.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/narcissus/jslex.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/narcissus/jsparse.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/narcissus/jsdecomp.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/definitions.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/helper.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/driver.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/dotviz.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/typeinference.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/rangeanalysis.js"></script>
+	<script type="application/javascript" src="../lib/intel/jit/compiler/inferblockflow.js"></script>
+	<script type="application/javascript" src="../lib/intel/jit/compiler/infermem.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/genOCL.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/runOCL.js"></script>
+
+</head> 
+    <body onload="loaded();"> 
+   
+   
+
+   
+    <script type="application/javascript" src="../com/UIElement.js"></script>
+   
+    <!-- physics cubes -->
+    <script type="application/javascript" src="engine/CubeCollision.js"></script>
+     <script type="application/javascript" src="engine/CubeCollisionOCL.js"></script>
+    <script type="application/javascript" src="engine/Cube.js"></script>
+    <script type="application/javascript" src="engine/VecMath.js"></script>
+    <script type="application/javascript" src="engine/CubeMainCycle.js"></script>
+    <script type="application/javascript" src="engine/ApplyImpulsesOCL.js"></script>
+    <script type="application/javascript" src="engine/TestCollisionOCL.js"></script>
+
+    <!-- COM -->
+    <script type="application/javascript" src="../com/Util.js"></script>
+	<script type="application/javascript" src="../com/FPSCounter.js"></script>
+	
+
+    <!-- other libraries -->
+    <script type="application/javascript" src="../lib/three/build/Three.js"></script>
+    <script type="application/javascript" src="../lib/RequestAnimationFrame.js"></script>
+	<script type="text/javascript" src="CamControl.js"></script>
+	
+	
+	
+    <script type="text/javascript">
+
+        // Implimentation Switches
+        var COLLISION_OCL = false;
+        var TEST_COLLISION = false;
+        var IMPULSE_OCL = false;
+        var SCENARIO = "default";
+
+
+        // GLOBAL HOOK TO PHYSICS CUBE OBJECTS
+        var g_cubes = new Array();
+        var g_cubes_OCL = new ParallelArray();  // global array of all cube data
+        var STATIC = new S_STATIC();
+        var ENGINE = new OBBEngine();
+
+        var TRACE = true;
+        var DEBUG = true;
+
+
+        // OLD ENGINE
+       
+        var paused = false;
+        var NUM_FLOORS = 8;
+
+
+        // RENDER ENGINE
+        var SHADOW_MAP_WIDTH = 2048;
+        var SHADOW_MAP_HEIGHT = 2048;
+        var MARGIN = 100;
+        var SCREEN_WIDTH = window.innerWidth;
+        var SCREEN_HEIGHT = window.innerHeight - 2 * MARGIN;
+        var sceneHUD, cameraOrtho, hudMaterial;
+
+        // GAME STATE
+        var bullets = new Array();
+
+      
+        // TIMING VARS FOR ENGINE UPDATE
+        var hh = 0;
+        var ot = new Date().getTime();
+        var t0 = new Date().getTime();
+
+        var y0 = 20;
+        var fpsS = 'n/a',
+        fpsT = 0,
+        fpsC = 0,
+        ms;
+        var counter = new FPSCounter();
+
+        var ground;
+
+
+        // default cube size
+        var width; 
+        var height;
+        var depth;
+
+        var isDialog = false, isIntro = false;
+
+
+        // FIRST RUN
+        function loaded() {
+                   
+            width = 3.5;
+            height = 10;
+            depth = 2;
+
+            var scenario = gup("scenario");
+            if (scenario.length > 0)
+                SCENARIO = scenario;
+
+
+            var toggleRiverTrail = new UIToggle("Use Impulse Kernel", "logDebug", false, impulseTrue, impulseFalse);
+            var toggleRiverTrail = new UIToggle("Use Collision Kernel", "logDebug", false, colOCLTrue, colOCLFalse);
+           // var toggleRiverTrail = new UIToggle("Do Debug", "logDebug", false, setDebugLogTrue, setDebugLogFalse);
+           // var toggleRiverTrail = new UIToggle("Use Test Collision Kernel", "logDebug", false, setTestTrue, setTestFalse);
+
+           
+            initializeScene();
+           
+
+            draw();
+
+        };
+
+        function setTestTrue() {
+            TEST_COLLISION = true;
+        }
+        function setTestFalse() {
+            TEST_COLLISION = false;
+        }
+
+        function impulseTrue() {
+            UseParallelVelocities();
+            IMPULSE_OCL = true;
+        }
+
+        function impulseFalse() {
+            UseNormalVelocities();
+            IMPULSE_OCL = false;
+        }
+
+        function colOCLTrue() {
+            COLLISION_OCL = true;
+        }
+
+        function colOCLFalse() {
+            COLLISION_OCL = false;
+        }
+
+        function setDebugLogTrue() {
+            
+            DEBUG = true;
+        }
+        function setDebugLogFalse() {
+           
+            DEBUG = false;
+        }
+       
+        function setTraceTrue() {
+            TRACE = true;
+        }
+        function setTraceFalse() {
+            TRACE = false;
+        }
+
+        // THREE.js OPEN GL RENDERING VARS
+        var renderer, container, camera, light, cubeArray, sceneThree, cameraControl;              
+        function initializeScene() {
+
+            if (DEBUG == true)
+                document.getElementById("debug").style.display = "inherit";
+
+
+            // gl context
+            container = document.getElementById("three-scene");
+
+            // main scene
+            sceneThree = new THREE.Scene();
+            //sceneThree.fog = new THREE.Fog(0xffffff, 10, 200);
+
+            // camera to render the finalScene
+            camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
+
+            cameraControl = new CircularCamControls(camera);
+            cameraControl.lookSpeed = .0625;
+            cameraControl.noFly = true;
+            cameraControl.lookVertical = true;
+            cameraControl.constrainVertical = true;
+            cameraControl.activeLook = true;
+            cameraControl.movementSpeed = 100;
+
+            sceneThree.add(camera);
+            camera.position.x = -10;
+            camera.position.y = 5;
+            camera.position.z = 0;
+            camera.lon = 0;
+            camera.lat = 0;
+
+            camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+            addCubes();
+
+
+            // open GL render engine
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(1200, 700);
+            //renderer.sortObjects = true;
+            renderer.setClearColorHex(0xffffff, 1);
+
+            // SHADOW MAP			
+            /*renderer.shadowCameraNear = 3;
+            renderer.shadowCameraFar = camera.far;
+            renderer.shadowCameraFov = 27;
+
+            renderer.shadowMapBias = 0.0049;
+            renderer.shadowMapDarkness = 0.5;
+            renderer.shadowMapWidth = SHADOW_MAP_WIDTH;
+            renderer.shadowMapHeight = SHADOW_MAP_HEIGHT;
+
+            renderer.shadowMapEnabled = true;
+            renderer.shadowMapSoft = true;*/
+
+            container.appendChild(renderer.domElement);
+
+            // ambient
+            var ambient = new THREE.AmbientLight(0x444444);
+            sceneThree.add(ambient);
+
+            //shadow map light
+            light = new THREE.SpotLight(0xaaaaaa);
+            light.position.set(0, 500, 250);
+            light.target.position.set(0, 0, 0);
+       //     light.castShadow = true;
+            sceneThree.add(light);
+
+            cubeArray = new Array();
+
+            var c = 0;
+
+
+            // make render cubes
+            for (var i = 0; i < NUM_CUBES + 1; i++) {
+
+                var p_color = RGBtoHex(255 *Math.random(), 255 * (i / NUM_CUBES) *Math.random(), .5);
+
+                if (i == 0)
+                    p_color = RGBtoHex(0, 0, 255);
+
+                var cubeMaterial = new THREE.MeshPhongMaterial({ color: p_color/*, wireframe: true*/ });
+                cubeMaterial.color.a = 1;
+                cubeMaterial.opacity = 1;
+                var cubeGeom = new THREE.CubeGeometry(1, 1, 1);
+                var cubeMesh = new THREE.Mesh(cubeGeom, cubeMaterial);
+
+                cubeMesh.castShadow = true;
+                cubeMesh.receiveShadow = false;
+                cubeMesh.useQuaternion = true;
+                cubeMesh.autoUpdateMatrix = true;
+                cubeMesh.position.x = (i * 1);
+
+                cubeMesh.originalColor = p_color;
+
+                sceneThree.add(cubeMesh);
+                cubeArray.push(cubeMesh);
+            }
+
+            onResize();
+        }
+
+
+        function onResize() {
+            document.getElementById("three-scene").width = window.innerWidth;
+            document.getElementById("three-scene").height = window.innerHeight;
+
+            if (camera != null) {
+                camera.aspect = (window.innerWidth - 20) / (window.innerHeight - 50);
+                camera.updateProjectionMatrix();
+
+                SCREEN_WIDTH = window.innerWidth;
+                SCREEN_HEIGHT = window.innerHeight - 2 * MARGIN;
+            }
+
+            if (renderer != null) renderer.setSize(window.innerWidth - 10, window.innerHeight - 50);
+        }
+
+
+
+        var NUM_CUBES = 200;
+        var FLOOR_SIZE = 150;
+
+        var projectileIndex = -1;
+        function addCubes() {
+
+            //zero out cubes
+            g_numCubes = 0;
+
+            switch (SCENARIO) {
+                case "default": 
+                    makeDefaultCubes();
+                    break;
+                case "recompile":
+                    makeCrashCubes();
+                    break;
+                case "popcorn":
+                    makePopcornCubes();
+                    break;
+                case "tower":
+                    makeTower();
+                    break;
+            }
+
+
+            ConvertCubesToArrays();
+           
+            setLinVelocity(projectileIndex, [-60, 15, 0]);
+
+            if( IMPULSE_OCL )
+                UseParallelVelocities()
+                
+            launchCube();
+            setInterval(launchCube, 150);
+        }
+
+
+        function makeTower() {
+
+            camera.position.x = -20;
+            camera.position.y = 20;
+            camera.position.z = -5;
+
+            for (var i = 0; i < 5 ; i++) {
+
+                //FLOOR                 //pos    //rot      //size      // mass
+                var cube = new Cube([0, 2* i, 0], [0, 0, 0], [3, 2, 3],2);
+                g_cubes.push(cube);
+                g_numCubes++;
+
+            }
+
+
+            //FLOOR                 //pos    //rot      //size      // mass
+            var cube = new Cube([0, 0, 0], [0, 0, 0], [50, 2, 50], 100000);
+            g_cubes.push(cube);
+            g_numCubes++;
+
+
+        }
+
+
+        function makeDefaultCubes() {
+
+            camera.position.x = -20;
+            camera.position.y = 20;
+            camera.position.z = 0;
+           
+            for (var i = 0; i < NUM_CUBES / 20; i++) {
+
+
+                for (var m = 0; m < NUM_CUBES / 20; m++) {
+                    var cube = new Cube([-10 + i * 6, i * 2 + 5, -30+  m * 4], [i * 10, 0, 0], [2, 4, 3], .25);
+                    g_cubes.push(cube);
+                    g_numCubes++;
+                }
+                
+            }
+
+
+            //FLOOR                 //pos    //rot      //size      // mass
+            var cube = new Cube([0, 0*-2, 0], [0, 0, 0], [50, 2, 50], 100000);
+            g_cubes.push(cube);
+            g_numCubes++;
+
+        }
+
+
+
+        function makeCrashCubes() {
+
+            camera.position.x = -90;
+            camera.position.y = 25;
+            camera.position.z = 0;
+
+            // CRASH ON RECOMPILE
+            var row = 0, column = 0;
+            var xPos = -50, yPos = 30.5, zPos = -10;
+            for (var i = 0; i < NUM_CUBES - 1; i++) {
+
+                var cube = new Cube([xPos + col, yPos, zPos + row], [0, 0, 0], [2, 2, 2], 10);
+                g_cubes.push(cube);
+                g_numCubes++;
+
+                if (i % 20 == 0 && i != 0) {
+                    row += 6;
+                    col = 0;
+                } else {
+                    col += 6;
+                }
+
+               /* if (i == NUM_CUBES / 2) {
+                    yPos = 9;
+                    row = 0;
+                    col = 0;
+                }*/
+            }
+
+            //FLOOR                 //pos    //rot      //size      // mass
+            var cube = new Cube([0, 0, 0], [0, 0, 0], [FLOOR_SIZE, 2, FLOOR_SIZE], 100000);
+            g_cubes.push(cube);
+            g_numCubes++;
+
+        }
+
+
+
+
+
+        function launchCube() {
+
+            return;
+            projectileIndex =1 + Math.round(Math.random() * (NUM_CUBES - 20) );           
+            // launch a cube
+            setLinVelocity(projectileIndex, [0, 15, 0]);
+
+            
+        }
+
+
+        var activeBodies;
+        var time = 0;
+        var q = 0;
+        var fps2 = 1;
+
+
+        var row = 0;
+        var col = 0;
+        var stack = 0;
+
+        var bulletIndex = 0;
+        function draw() {
+
+            activeBodies = g_cubes.length;
+
+                           
+            bulletIndex = 0;
+            var removeIndex = -1;
+                            
+            for (var i = 0; i < g_cubes.length; i++) {
+                        
+                var mat = CubeList._m_matWorld[i];
+                cubeArray[i].position.x = mat[3];
+                cubeArray[i].position.y = mat[7];
+                cubeArray[i].position.z = mat[11];
+                cubeArray[i].scale.x = CubeList._m_e[i][0] * 2;
+                cubeArray[i].scale.y = CubeList._m_e[i][1] * 2;
+                cubeArray[i].scale.z = CubeList._m_e[i][2] * 2;
+
+                cubeArray[i].quaternion.set(CubeList._m_rot[i][0], CubeList._m_rot[i][1], CubeList._m_rot[i][2], CubeList._m_rot[i][3]);
+
+              
+
+                if (CubeList._m_awake[i] == 0) {
+
+                    cubeArray[i].material.color = new THREE.Color(0x0000ff);
+
+                } else {
+                    cubeArray[i].material.color = new THREE.Color( 0xff2222);
+                }
+
+            }
+
+            camera.updateProjectionMatrix();
+
+            renderer.render(sceneThree, camera);
+
+            calculateDT(); // DELTA TIME FOR ENGINE
+           
+
+            if (!paused) {
+                updateDebug();
+                ENGINE.Update(ms / 1000);
+                time++;
+            }
+
+            fps2 = counter.tick();
+
+            requestAnimationFrame(draw);
+        }
+
+        var currentBullet = 0;
+        window.onclick = function onClick(e) {
+           
+            if (e.target == document.getElementById("Log Debug Info"))
+                return;
+               
+
+            currentBullet++;
+        }
+
+       
+        window.onkeydown = function (e) {
+
+            var code;
+            if (!e) var e = window.event;
+
+            if (e.keyCode) code = e.keyCode;
+            else if (e.which) code = e.which;
+
+            if (code == 80) {
+                paused = !paused;
+            }
+        }
+
+
+
+        var fps = 0, current, prevUpdate = (new Date) * 1 - 1;
+        var fpsBuffer = 50;
+
+        function calculateDT() {
+
+            var t1 = new Date().getTime();
+
+            ms = (t1 - t0);
+            t0 = t1;
+
+            fpsT += ms;
+            fpsC++;
+            if (fpsT >= 3000) {
+                fpsS = "" + fpsC * 1000 / fpsT;
+                fpsT = 0;
+                fpsC = 0;
+                var i = fpsS.indexOf(".");
+                if (i != -1) fpsS = fpsS.substr(0, i + 2);
+            }
+            var minFPS = 1000 / 60;
+
+            if (ms > minFPS) ms = minFPS;
+        }
+
+        setInterval(function () {
+
+            var fpsOut = document.getElementById('fps-display');
+            fpsOut.innerHTML = fps2 + " FPS";
+            document.getElementById("bodies-display").innerHTML = activeBodies + " Objects";
+
+        }, 1000);
+
+
+
+        function degToRad(deg) {
+            var pi = Math.PI;
+            return (deg) * (pi / 180);
+        }
+
+        function RGBtoHex(R, G, B) { return "0x" + toHex(R) + toHex(G) + toHex(B) }
+        function toHex(N) {
+            if (N == null) return "00";
+            N = parseInt(N); if (N == 0 || isNaN(N)) return "00";
+            N = Math.max(0, N); N = Math.min(N, 255); N = Math.round(N);
+            return "0123456789ABCDEF".charAt((N - N % 16) / 16)
+          + "0123456789ABCDEF".charAt(N % 16);
+        }
+
+
+
+        
+
+        var debugArgs = new Array();
+        function debug(p_name, p_value) {
+
+            if (!DEBUG)
+                return;
+
+            var debugItem = new Object();
+            debugItem.name = p_name;
+            debugItem.value = p_value;
+
+            debugArgs.push(debugItem);
+        }
+
+        function updateDebug() {
+
+            var d = document.getElementById("debug");
+            d.innerHTML = "";
+
+            for (var i = 0; i < debugArgs.length; i++) {
+
+                try {
+                    d.innerHTML += "<br/>" + debugArgs[i].name + " = " + JSON.stringify(debugArgs[i].value, "data", "\t");
+                } catch (err) {
+                    d.innerHTML += "<br/>" + debugArgs[i].name + " = " + debugArgs[i].value;
+                }
+            }
+            debugArgs = new Array();
+        }
+
+
+</script>
+   
+
+
+     
+      <div style="opacity:.75;position:fixed;top:0pt;right:0pt;padding:2em;font-family:sans-serif;height:100%;z-index:3;" >    
+          <div  class="fps-mon"><div id="fps-display" style="text-align:right;color:#000000">--</div></div>
+          <div  class="fps-mon"><div id="bodies-display" style="text-align:right;color:#000000">--</div></div>
+     </div>
+       
+      <div id="three-scene" style="border: none; display:inline-block; margin-left:-3px; width:100%; position:fixed" ></div>
+
+      <div id="RTrJS" class="clickable" style="position:fixed;z-index:5; top:30px; left:10px;font-family:courier; font-size: larger;"> </div>
+      
+      <div id="useSimplex" class="clickable" style="position:fixed;z-index:5; top:60px; left:10px;font-family:courier; font-size: larger;"> </div>
+      
+      <div id="logDebug" class="clickable" style="position:fixed;z-index:5; top:90px; left:10px;font-family:courier; font-size: larger;"> </div>
+
+      <div class="debugger" id="debug" style="position:fixed;z-index:10;background-color:Black;color:Green;font-size:small;bottom:10px;left:10pt;"></div>
+
+
+        <div id="numhits" style="position:fixed;z-index:10;background-color:Black;color:Green;font-size:small;bottom:10px;left:10pt;">Hello</div>
+
+ </body>
+</html>

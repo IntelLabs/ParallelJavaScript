@@ -1,0 +1,21 @@
+{
+  "id": "6481ad84-c8bb-4e83-89fc-964ba82057cb",
+  "title": "",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 14.299999999999963,
+  "sy": 3.8000000000000211,
+  "sz": -6.38378239159465E-16,
+  "rx": 0,
+  "ry": -2.7200000000000015,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/FantasyBack001/brushes/6481ad84-c8bb-4e83-89fc-964ba82057cb/LEFT IMAGE.jpg",
+    "_assets/levels/FantasyBack001/brushes/6481ad84-c8bb-4e83-89fc-964ba82057cb/RIGHT IMAGE.jpg",
+    "_assets/levels/FantasyBack001/brushes/6481ad84-c8bb-4e83-89fc-964ba82057cb/TOP IMAGE.jpg",
+    "_assets/levels/FantasyBack001/brushes/6481ad84-c8bb-4e83-89fc-964ba82057cb/BOTTOM IMAGE.jpg",
+    "_assets/levels/FantasyBack001/brushes/6481ad84-c8bb-4e83-89fc-964ba82057cb/FRONT IMAGE.png",
+    "_assets/levels/FantasyBack001/brushes/6481ad84-c8bb-4e83-89fc-964ba82057cb/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "FantasyBack001"
+}

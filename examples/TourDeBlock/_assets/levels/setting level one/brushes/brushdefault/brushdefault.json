@@ -1,0 +1,18 @@
+{
+  "id": "brushdefault",
+  "title": "default",
+  "mass": "1",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "sourceImages": [
+    "_assets/levels/setting level one/brushes/brushdefault/TOP IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/brushdefault/BOTTOM IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/brushdefault/FRONT IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/brushdefault/BACK IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/brushdefault/LEFT IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/brushdefault/RIGHT IMAGE.jpg"
+  ],
+  "levelTitle": "setting level one",
+  "prefix": "_assets/brushdefault"
+}

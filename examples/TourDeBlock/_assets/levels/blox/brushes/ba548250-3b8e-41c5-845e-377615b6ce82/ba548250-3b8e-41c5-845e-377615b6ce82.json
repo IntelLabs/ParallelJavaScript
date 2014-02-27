@@ -1,0 +1,21 @@
+{
+  "id": "ba548250-3b8e-41c5-845e-377615b6ce82",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 5.8999999999999932,
+  "sy": 4.5000000000000195,
+  "sz": 5.7999999999999954,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/blox/brushes/ba548250-3b8e-41c5-845e-377615b6ce82/LEFT IMAGE.jpg",
+    "_assets/levels/blox/brushes/ba548250-3b8e-41c5-845e-377615b6ce82/RIGHT IMAGE.jpg",
+    "_assets/levels/blox/brushes/ba548250-3b8e-41c5-845e-377615b6ce82/TOP IMAGE.jpg",
+    "_assets/levels/blox/brushes/ba548250-3b8e-41c5-845e-377615b6ce82/BOTTOM IMAGE.jpg",
+    "_assets/levels/blox/brushes/ba548250-3b8e-41c5-845e-377615b6ce82/FRONT IMAGE.jpg",
+    "_assets/levels/blox/brushes/ba548250-3b8e-41c5-845e-377615b6ce82/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "blox"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "brushdefault",
+  "title": "default",
+  "mass": "1",
+  "pointValue": 1,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 0.099999999999999367,
+  "sourceImages": [
+    "_assets/levels/SpaceBack001/brushes/brushdefault/LEFT IMAGE.jpg",
+    "_assets/levels/SpaceBack001/brushes/brushdefault/RIGHT IMAGE.jpg",
+    "_assets/levels/SpaceBack001/brushes/brushdefault/TOP IMAGE.jpg",
+    "_assets/levels/SpaceBack001/brushes/brushdefault/BOTTOM IMAGE.jpg",
+    "_assets/levels/SpaceBack001/brushes/brushdefault/FRONT IMAGE.png",
+    "_assets/levels/SpaceBack001/brushes/brushdefault/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "SpaceBack001",
+  "prefix": "_assets/levels/SpaceBack001/brushes/brushdefault"
+}

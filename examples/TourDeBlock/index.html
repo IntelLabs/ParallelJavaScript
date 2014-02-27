@@ -1,0 +1,134 @@
+<html>
+    <!--
+
+    Tour de Block
+        Designed by Indigo Kelleigh, Developed by Vance Feldman, Original c++ engine by Ben Kenwright
+
+    Copyright (c) 2012, Intel Corporation
+    All rights reserved.
+ 
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+ 
+    - Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    - Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+ 
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+    THE POSSIBILITY OF SUCH DAMAGE.
+    --->
+    
+    <head>
+        <title>Tour De Block: River Trail Game</title>
+
+        <script type="text/javascript" src="tourdeblock/lib/intel/ParallelArray.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/narcissus/jsdefs.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/narcissus/jslex.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/narcissus/jsparse.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/narcissus/jsdecomp.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/compiler/definitions.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/compiler/helper.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/compiler/driver.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/compiler/dotviz.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/compiler/typeinference.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/compiler/rangeanalysis.js"></script>
+	    <script type="application/javascript" src="tourdeblock/lib/intel/jit/compiler/inferblockflow.js"></script>
+	    <script type="application/javascript" src="tourdeblock/lib/intel/jit/compiler/infermem.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/compiler/genOCL.js"></script>
+        <script type="application/javascript" src="tourdeblock/lib/intel/jit/compiler/runOCL.js"></script>
+
+        <link href="tourdeblock/resources/CooperBlack/stylesheet.css" rel="stylesheet" type="text/css">
+        <link href="tourdeblock/com/Designer.css" rel="stylesheet" type="text/css">   
+         
+
+    </head> 
+
+    <body onload="onLoaded();"> 
+
+          <script type="text/javascript">
+              
+              var introText = ("Tour de Block");
+              var n = 0;
+              function onLoaded() {                
+
+                  addLetter();
+                 // testRT("/tourdeblock/");
+                 //  testFF("/tourdeblock");
+              }
+
+
+              function addLetter() {
+
+                  if (n < introText.length - 1)
+                      setTimeout(addLetter, 150);
+                  else
+                      top.location.href = top.location.href + "tourdeblock/";
+
+                  document.getElementById("intro").innerHTML += introText[n];
+                  n++;
+              }
+              
+              function testFF(url) {
+                
+                  if (parseInt(navigator.userAgent.toString().toLowerCase().split("firefox/")[1].split(".")[0]) <= 13) {
+                      document.getElementById("use-firefox").style.display = "inherit";
+                      document.getElementById("install-plugin").style.display = "none";
+                  }
+              }
+
+
+              function testRT(url) {
+
+                  var openCLContext;
+                  var dpoInterface;
+                  var dpoPlatform;
+
+                  try {
+                      dpoInterface = new DPOInterface();
+                      dpoPlatform = dpoInterface.getPlatform();
+                      openCLContext = dpoPlatform.createContext();
+                  } catch (e) {
+                      //  document.write("Please Install the River Trail Firefox Add-On");
+                      document.getElementById("install-plugin").style.display = "inherit";
+                      return;
+                  }
+
+                  top.location.href = url;
+              }
+
+
+
+          </script>
+
+        <div id="intro"></div>
+
+        <div id="install-plugin" class="install-notice">
+            This game requires that you install the River Trail Firefox Add-On.
+            <br /><a href="https://github.com/RiverTrail/RiverTrail/downloads/" target="_blank">Get it here</a>
+        </div>
+
+        <div id="use-firefox" class="install-notice">
+            This game requires that you run Firefox 13. If you don't already have it, 
+            <br /><a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank">Get it here</a>
+        </div>
+
+
+        <div id="intro-backdrop" style="font-family: CooperBlackRegular; opacity:.5;z-index:0;width: 100%;height: 100%;"><img src="/tourdeblock/resources/interface/backdrop.png" width="100%" height="100%" /></div>
+
+        
+        
+    </body>
+
+    
+</html>

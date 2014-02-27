@@ -1,0 +1,18 @@
+{
+  "id": "84e79562-03d3-493a-bf3f-81c711039f04",
+  "title": "poop",
+  "mass": "1",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "sourceImages": [
+    "_assets/levels/waller/brushes/84e79562-03d3-493a-bf3f-81c711039f04/LEFT IMAGE.jpg",
+    "_assets/levels/waller/brushes/84e79562-03d3-493a-bf3f-81c711039f04/RIGHT IMAGE.jpg",
+    "_assets/levels/waller/brushes/84e79562-03d3-493a-bf3f-81c711039f04/TOP IMAGE.jpg",
+    "_assets/levels/waller/brushes/84e79562-03d3-493a-bf3f-81c711039f04/BOTTOM IMAGE.jpg",
+    "_assets/levels/waller/brushes/84e79562-03d3-493a-bf3f-81c711039f04/FRONT IMAGE.jpg",
+    "_assets/levels/waller/brushes/84e79562-03d3-493a-bf3f-81c711039f04/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "waller",
+  "prefix": "_assets/levels/waller/brushes/84e79562-03d3-493a-bf3f-81c711039f04"
+}

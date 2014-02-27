@@ -1,0 +1,21 @@
+{
+  "id": "fc16d525-3eca-43e6-861c-41e4152df9ba",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 7.099999999999989,
+  "sy": 6.5000000000000124,
+  "sz": 2,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/carnival/brushes/fc16d525-3eca-43e6-861c-41e4152df9ba/LEFT IMAGE.jpg",
+    "_assets/levels/carnival/brushes/fc16d525-3eca-43e6-861c-41e4152df9ba/RIGHT IMAGE.jpg",
+    "_assets/levels/carnival/brushes/fc16d525-3eca-43e6-861c-41e4152df9ba/TOP IMAGE.jpg",
+    "_assets/levels/carnival/brushes/fc16d525-3eca-43e6-861c-41e4152df9ba/BOTTOM IMAGE.jpg",
+    "_assets/levels/carnival/brushes/fc16d525-3eca-43e6-861c-41e4152df9ba/FRONT IMAGE.jpg",
+    "_assets/levels/carnival/brushes/fc16d525-3eca-43e6-861c-41e4152df9ba/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "carnival"
+}

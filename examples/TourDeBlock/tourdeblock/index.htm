@@ -1,0 +1,1388 @@
+<html>
+
+    <!--
+
+    Tour de Block
+        Designed by Indigo Kelleigh, Developed by Vance Feldman, Original c++ engine by Ben Kenwright
+
+    Copyright (c) 2012, Intel Corporation
+    All rights reserved.
+ 
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+ 
+    - Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+    - Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+ 
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+    THE POSSIBILITY OF SUCH DAMAGE.
+    --->
+
+<head>
+    <title>Tour De Block: River Trail Game</title>
+
+    <meta property=”og:site_name” content="Tour De Block: River Trail Game. Data Parallel Gaming, in Javascript!"/> 
+</head> 
+    <body onload="onLoaded();"> 
+   
+   <!-- font -->
+    <link href="supplimental/CooperBlack/stylesheet.css" rel="stylesheet" type="text/css">   
+
+   <script type="text/javascript" src="../polyfill/Prototype.js"></script>
+
+   <!-- COM -->
+    <script type="text/javascript" src="com/Util.js"></script>
+    <script type="application/javascript" src="com/TextureBuilder.js"></script>
+    <script type="text/javascript" src="com/UIElement.js"></script>
+    <link href="com/Designer.css" rel="stylesheet" type="text/css">   
+   <!-- <script type="application/javascript" src="com/FPSCounter.js"></script>-->
+
+   <!-- unique -->
+   
+    <script type="text/javascript" src="game/CamControl.js"></script>
+    <script type="text/javascript" src="game/GameLevelLoader.js"></script>
+    <script type="text/javascript" src="game/Interface.js"></script>
+    <script type="text/javascript" src="game/LevelManagement.js"></script>
+    
+    
+     <!-- physics cubes -->
+    <script type="application/javascript" src="game/engine/CubeCollision.js"></script>
+    <!--<script type="application/javascript"
+        src="game/engine/CubeCollisionOCL-Ported.js"></script>-->
+    <script type="application/javascript" src="game/engine/Cube.js"></script>
+    <script type="application/javascript" src="game/engine/VecMath.js"></script>
+    <script type="application/javascript" src="game/engine/CubeMainCycle.js"></script>
+    <script type="application/javascript" src="game/engine/ApplyImpulsesOCL.js"></script>
+
+    
+   <!-- other libraries -->
+    <script type="application/javascript" src="lib/three/build/Three.js"></script>
+    <script type="text/javascript" src="lib/jQuery.js"></script>
+    <script type="text/javascript" src="lib/RequestAnimationFrame.js"></script>
+    <script type="text/javascript" src="lib/JSTweener.js"></script>
+
+    <!-- supplimental (not required for game) -->
+    <script type="text/javascript" src="supplemental/Automator.js"></script>
+
+    <!--
+    <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+    -->
+
+
+   
+
+    <script type="text/javascript">
+
+        var CubeList;
+        
+        var isChrome = false;
+
+        var Config = new Object();
+        var Levels = new Object();
+        var HighScores = new Object();
+
+        var SERVICE_PATH = "";
+
+        var TRACE = true;
+        var DEBUG = true;
+        var SHOW_MOUSE = false;
+        var SHOW_MULTITOUCH_POINTS = false;
+       
+        // Implimentation Switches set in interface
+        var COLLISION_OCL = false;
+        var TEST_COLLISION = false;
+        var IMPULSE_OCL = false; 
+       
+
+        // GLOBAL HOOK TO PHYSICS CUBE OBJECTS
+        var g_cubes = new Array();
+        //var g_cubes_OCL = new ParallelArray();  // global array of all cube data
+        var bulletIndices = new Array(); // projectiles
+        var STATIC = new S_STATIC();
+        var ENGINE;
+        
+        /// can't find a context you might even be in chrome
+        var HAS_OPENCL_CONTEXT = true;
+       
+        var NUM_CUBES = 0;
+        var paused = false;
+        var NUM_BULLETS = 5; // the number of bullets that get recycled
+        
+        var GRAVITY = -200; /* defalut, but loaded from level data */
+
+        // RENDER ENGINE
+        var cubeArray = new Array();
+        var SHADOW_MAP_WIDTH = 2048;
+        var SHADOW_MAP_HEIGHT = 2048;
+        var MARGIN = 100;
+        var SCREEN_WIDTH = window.innerWidth;
+        var SCREEN_HEIGHT = window.innerHeight - 2 * MARGIN;
+        var sceneHUD, cameraOrtho, hudMaterial;
+        var trailOpacity = 1, pMaterial;
+
+        // GAME STATE
+        var bullets = new Array();
+        var isLoading = false;
+        var hasLoadedLevel = false;
+        var isDialog = false;
+        var isGameIntro = true;
+        var currentLevelNum = 1;
+        var redirect = "";
+        var steps=0;
+        // USED FOR DEFAULT BRUSH see texture builder
+        var activeBrush;
+
+
+        // UI
+        var loadButton;
+        var loadingIndicator;
+        var modal;
+        var userInterface;
+        var scoreDisplay,scoreDisplayTop, cubeDisplay, levelPercent, levelProgress;
+        var reticule;
+
+        // TIMING VARS FOR ENGINE UPDATE
+        var timeDivisor = 1100;
+        var hh = 0;
+        var ot = new Date().getTime();
+        var t0 = new Date().getTime();
+       
+        var y0 = 20;
+        var fpsS = 'n/a',      
+        fpsT = 0,
+        fpsC = 0,
+        ms;
+        var fpsOut;
+       
+
+        var fps = 0, now, lastUpdate = (new Date) * 1 - 1;
+       
+
+        var currentParticle;
+        var ground;
+        var mouse = new Object();
+        var activeBodies;
+        var time = 0;
+
+        // CAMERA CONTROL
+        var camPhase = 0, camElevation = 2;
+        var ongoingTouches = [];
+
+        // TOUCH
+        var fingerIndex = 0;
+        var previousTouch = new touchPoint(0, 0);
+        var eventTouch = new touchPoint(0, 0);
+        var dragStartPoint = new touchPoint(0, 0);
+        var orbitDelta = new touchPoint(0, 0);
+        var touchDrag = false;
+        var preventDrag = false;
+        var lazyFingerLock = false;
+        var releaseDragTimer;
+        var touchX, touchY;
+       
+
+
+        //multiplied for camera control
+        var touchSpeed = 0;
+
+        var oldPoint = new touchPoint(0, 0);
+
+
+
+        // FIRST RUN
+        function onLoaded() {
+            //testFF("../");
+            testRT("../");
+
+            isFiring = false;
+            time = 0;
+
+            ENGINE = new OBBEngine();
+            NUM_BULLETS = 5;
+            NUM_CUBES = 0;
+            currentParticle = 0;
+            reticuleScale = 2;
+            currentScore = 0;
+            totalScore = 0;
+            bullets = [];
+
+            if (navigator.userAgent.toLowerCase().indexOf("chrome") != -1)
+                isChrome = true;
+
+            previousTouch = new touchPoint(0, 0);
+            document.multitouchData = true;
+            document.addEventListener("MozTouchDown", onTouchDown, true);
+            document.addEventListener("MozTouchMove", onTouchMove, false);
+            document.addEventListener("MozTouchUp", onTouchUp, false);
+            fpsOut = document.getElementById('fps-display');
+
+            
+            
+            
+            /*
+            //these are supposed to work as the native events. would be nice if they did.
+            console.log("add touch events");
+            document.addEventListener("touchstart", handleStart, false);
+            document.addEventListener("touchend", handleEnd, false);
+            document.addEventListener("touchcancel", handleCancel, false);
+            document.addEventListener("touchleave", handleLeave, false);
+            document.addEventListener("touchmove", handleMove, false);
+            */
+
+
+            document.addEventListener("keydown", onKeyDown, false);
+            document.addEventListener("keyup", onKeyUp, false);
+
+
+            reticule = document.getElementById("reticule");
+            reticule.style.opacity = "0";
+            reticule.style.display = "none";
+
+            reticuleScale = 2;
+            reticule.setAttribute("style", "-moz-transform:scale(" + reticuleScale + ")");
+            if( isChrome )
+                reticule.setAttribute("style", "-webkit-transform:scale(" + reticuleScale + ")");
+
+           
+            userInterface = new UserInterface();
+            loadConfig(initializeInterface);
+
+            fps = 0;
+
+            setInterval(function () {
+                if (typeof (activeBodies) === 'undefined')
+                    activeBodies = "";
+
+                fpsOut.innerHTML = fps.toFixed(1) + " FPS | " + activeBodies;
+
+            }, 1000);
+
+        };
+
+        // THESE WOULD BE GREAT IF THE EVENTS EVER FIRED
+        /*
+        function handleStart(evt) {
+            evt.preventDefault();
+            
+            var el = document.getElementsByTagName("canvas")[0];            
+            var touches = evt.changedTouches;
+
+            for (var i = 0; i < touches.length; i++) {
+                ongoingTouches.push(touches[i]);               
+            }
+        }
+
+        function handleMove(evt) {
+            evt.preventDefault();           
+            for (var i = 0; i < touches.length; i++) {               
+                var idx = ongoingTouchIndexById(touches[i].identifier);               
+                ongoingTouches.splice(idx, 1, touches[i]);  // swap in the new touch record
+            }
+        }
+
+        function handleEnd(evt) {
+            evt.preventDefault();
+            for (var i = 0; i < touches.length; i++) {
+                var color = colorForTouch(touches[i]);
+                var idx = ongoingTouchIndexById(touches[i].identifier);
+                ongoingTouches.splice(i, 1);  // remove it; we're done
+            }
+        }
+
+        function handleCancel(evt) {
+            evt.preventDefault();
+            var touches = evt.changedTouches;
+
+            for (var i = 0; i < touches.length; i++) {
+                ongoingTouches.splice(i, 1);  // remove it; we're done
+            }
+        }
+
+        function handleLeave() {
+        }
+        */
+
+
+        // TOUCH -----------------------------------------------------------------------------------------------------------------
+
+        function touchPoint (p_x, p_y) {
+            this.x = 0; this.y = 0;
+            if (typeof (p_x) !== "undefined")
+                this.x = p_x;
+            if( typeof( p_y) !== "undefined")
+                this.y = p_y;
+        }
+
+        touchPoint.prototype.x = 0;
+        touchPoint.prototype.y = 0;
+        touchPoint.prototype.distance = function (comparePoint) {
+            if (typeof (comparePoint) === 'undefined')
+                return 0;               
+            return Math.sqrt((comparePoint.x - this.x) * (comparePoint.x - this.x) + (comparePoint.y - this.y) * (comparePoint.y - this.y));
+        }
+       
+
+        // multitouch event handler for two finger scrolling in x or y
+        function onTouchMove(event) {
+            event.preventDefault();
+            touchX = event.clientX;
+            touchY = event.clientY;
+            if (preventTouchInteraction == true)
+                return;
+           
+            // single finger, ignore multitouch
+            if (preventDrag == true)
+                return;
+
+            // we've been one-finger dragging for a while, ignore multitouch
+            if (fingerIndex > 20 && touchDrag == false) {
+                preventDrag = true;
+                previousTouch = new touchPoint(0, 0);
+                cancelAllCameraMovement();
+            }
+
+            fingerIndex++;
+
+
+            // we've been two-finger dragging for a while, ignore multitouch
+            if (fingerIndex > 1000){
+                //lazyFingerLock = true;
+            }
+
+            eventTouch = new touchPoint(event.clientX, event.clientY);
+            
+            if (previousTouch.x == 0 && previousTouch.y == 0) {                
+                previousTouch = new touchPoint(eventTouch.x, eventTouch.y);
+                return;
+            }
+
+
+            // only track every other touch to keep fingers consistent           
+            if (fingerIndex % 2 == 0 )
+            {
+                touchDrag = false;
+
+                var distance = eventTouch.distance(previousTouch);
+
+                //filter really close touches
+                //in this case, assume single touch and defer to system mouse
+                if (distance < 60) {                   
+                    return;
+                }
+
+                // don't track the very first moments so it doesn't "jump"
+                if (fingerIndex > 7 ) {
+                    touchDrag = true;
+
+                    if (touchSpeed < 15 && lazyFingerLock == false)
+                        touchSpeed += .89;
+
+                    if (lazyFingerLock == true)
+                        touchSpeed += .1;
+                }
+                
+                if (SHOW_MULTITOUCH_POINTS) {
+                    document.getElementById("finger1").style.left = previousTouch.x + "px";
+                    document.getElementById("finger1").style.top = previousTouch.y + "px";
+
+                    document.getElementById("finger2").style.left = eventTouch.x + "px";
+                    document.getElementById("finger2").style.top = eventTouch.y + "px";
+                }
+                
+                var deltaX = dragStartPoint.x -  eventTouch.x;
+                var deltaY = dragStartPoint.y - eventTouch.y;
+              
+                
+                if (Math.abs(deltaX) > Math.abs(deltaY) ) {
+                    if (deltaX > 3) {
+                        cameraControl.moveRight = true;
+                        cameraControl.moveLeft = false;
+                        cameraControl.moveUp = false;
+                        cameraControl.moveDown = false;
+                    }
+
+                    if (deltaX < 3) {
+                        cameraControl.moveLeft = true;
+                        cameraControl.moveRight = false;
+                        cameraControl.moveUp = false;
+                        cameraControl.moveDown = false;
+                    }
+                }
+
+                if (Math.abs(deltaY) > Math.abs(deltaX)) {
+                    if (deltaY > 3) {
+                        cameraControl.moveDown = true;
+                        cameraControl.moveUp = false;
+                        cameraControl.moveLeft = false;
+                        cameraControl.moveRight = false;
+                    }
+
+                    if (deltaY < 3) {
+                        cameraControl.moveUp = true;
+                        cameraControl.moveDown = false;
+                        cameraControl.moveLeft = false;
+                        cameraControl.moveRight = false;
+                    }
+                    
+                }
+
+               
+            }
+            
+            previousTouch = eventTouch;
+        }
+
+        var fireTimout;
+        var fireDown = false;
+        var fireDownDelay;
+        
+        // multitouch event handler
+        function onTouchDown(event) {
+            // clear the "touch filter" delay for mouseup
+            window.clearTimeout(releaseDragTimer);
+
+            if (preventTouchInteraction == true)
+                return;
+
+            touchDrag = false;
+            preventDrag = false;
+            lazyFingerLock = false;
+           
+            fingerIndex = 0;
+
+            dragStartPoint = new touchPoint(event.clientX, event.clientY);
+            oldPoint = new touchPoint(previousTouch.x, previousTouch.y);
+
+            window.clearTimeout(fireTimout);
+          
+            if (Math.abs((SCREEN_WIDTH / 2) - event.clientX) < 50 && Math.abs((SCREEN_HEIGHT / 2) - event.clientY + 100) < 50) {
+                
+                window.clearTimeout(fireDownDelay);
+                fireDownDelay = setTimeout(beginTouchFire, 500);
+            }
+
+        }
+
+        function beginTouchFire() {
+
+            
+            if (Math.abs((SCREEN_WIDTH / 2) - touchX) < 50 && Math.abs((SCREEN_HEIGHT / 2) - touchY + 100) < 50) {
+                window.clearTimeout(fireDownDelay);
+                fireDown = true;
+                onFireDown(true);                
+             }
+        }
+
+
+        var preventTouchInteraction = false;
+        function endFireFromTouch() {
+            // essentially we don't want the depressed finger to double tap
+            preventTouchInteraction = true;
+            setTimeout(allowTouchInteraction, 1000);
+            
+        }
+        // this was used when touch-hold just fired
+        function allowTouchInteraction() {
+           
+            preventTouchInteraction = false;
+        }
+
+
+
+        // multitouch event handler
+        function onTouchUp(event) {
+           
+            if (fireDown == true) {
+                onFireUp(true);
+                fireDown = false;
+            }
+
+            window.clearTimeout(fireTimout);           
+            window.clearTimeout(releaseDragTimer);
+            releaseDragTimer = window.setTimeout(releaseDrag, 1000);
+
+            preventDrag = true;
+        }
+
+        function releaseDrag() {
+            preventDrag = false;
+            touchDrag = false;
+            cancelAllCameraMovement();
+        }
+
+        function cancelAllCameraMovement() {
+            cameraControl.moveLeft = false;
+            cameraControl.moveRight = false;
+            cameraControl.moveUp = false;
+            cameraControl.moveDown = false;
+        }
+
+        function testFF(url) {
+            if (parseInt(navigator.userAgent.toString().toLowerCase().split("firefox/")[1].split(".")[0]) <= 13) {
+                top.location.href = url;
+            }
+        }
+
+        function testRT(url) {            
+            var openCLContext;
+            var dpoInterface;
+            var dpoPlatform;
+
+            try {
+                dpoInterface = new DPOInterface();
+                dpoPlatform = dpoInterface.getPlatform();
+                openCLContext = dpoPlatform.createContext();
+            } catch (e) {
+                HAS_OPENCL_CONTEXT = false;
+            }
+
+        }
+
+
+
+
+        function initializeInterface() {
+
+            if (DEBUG == true)
+                document.getElementById("debug").style.display = "inherit";
+
+            SHOW_MULTITOUCH_POINTS = Config.showTouchDebug;
+
+            if (SHOW_MULTITOUCH_POINTS) {
+                document.getElementById("finger1").style.display = "inherit";
+                document.getElementById("finger2").style.display = "inherit";
+            }
+
+            // gl context
+            container = document.getElementById("three-scene");
+            modal = document.getElementById("file-modal");
+            scoreDisplay = document.getElementById("score-display");
+            scoreDisplayTop = document.getElementById("score-display-top");
+            cubeDisplay = document.getElementById("cube-display");
+            levelProgress = document.getElementById("progress");
+            levelPercent = document.getElementById("percent");
+            loadingIndicator = document.getElementById("loading-indicator");
+
+            document.getElementById("home-instructions").innerHTML = Config.instructions_text;
+
+            scoreDisplay.style.display = "none";
+
+            //set call to action text
+            document.getElementById('call-to-action').innerHTML = Config.controls_text;
+
+            // Must run once only
+            initializeScene();
+            setupEvents();
+            setTimeout(gupLevel, 1000);
+
+            // Init Home Screen
+            setState(States.HOME_SCREEN);
+
+            //initAutomator( );
+
+            $.getJSON('../_assets/levelschema.json', { cache: Math.round(Math.random() * 1000) }, function (data) {
+                // Store level data
+                Levels = data.levels;
+
+                // Setup first level to be played
+                var levelName = Levels[0].level;
+
+                setFlag("LEVEL_TO_LOAD", Levels[0]);
+                setState(States.LOAD_LEVEL);
+            });
+
+            $.getJSON('../_assets/HighScores.json', { cache: Math.round( Math.random() * 10000) }, function (data) {
+                HighScores = data.scores;
+            });
+
+            $.getJSON('../Redirect.aspx?exec=gettoken', { cache: Math.round(Math.random() * 10000) }, function (data) {
+                redirect = data.token;
+            });
+
+            initializeParticles();
+
+        }
+
+
+        function loadConfig(callback) {
+            $.getJSON('../_assets/config.json', {cache:Math.round( Math.random() * 1000)}, function (data) {
+                Config = data;
+                initButtons();
+                callback();
+            });
+        }
+
+        function setupEvents() {
+            window.onresize = function(event) {
+                onResize();
+                cameraControl.onResize();
+            }
+        }
+
+
+        var renderer, container, camera, light, cubeArray, sceneThree, cameraControl;
+        var particles, particleSystem;
+
+        function initializeScene() {            
+
+            // main scene
+            sceneThree = new THREE.Scene();
+            sceneThree.fog = new THREE.Fog(0xacacac, 10, 700);
+
+            // camera to render the finalScene
+            camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 2, 4000);
+            camera.position.y = 25;
+            camera.lookAt(0, 0, 0);
+
+
+            cameraControl = new CircularCamControls(camera);
+            cameraControl.lookSpeed = .0625;
+            cameraControl.noFly = true;
+            cameraControl.lookVertical = true;
+            cameraControl.constrainVertical = true;
+            cameraControl.activeLook = true;
+            cameraControl.movementSpeed = 100;
+
+            setTimeout(freezeCamera, 100);
+
+            sceneThree.add(camera);
+
+            // open GL render engine
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(1200, 700);
+            renderer.format = THREE.RGBAFormat;  // <-- TODO: move this outside draw
+            renderer.setClearColorHex(0xacacac, 1);
+
+            
+
+            // SHADOW MAP
+            renderer.shadowCameraNear = 3;
+            renderer.shadowCameraFar = camera.far;
+            renderer.shadowCameraFov = 27;
+
+            renderer.shadowMapBias = 0.0049; //.0049
+            renderer.shadowMapDarkness = 0.9; //.5
+            renderer.shadowMapWidth = SHADOW_MAP_WIDTH;
+            renderer.shadowMapHeight = SHADOW_MAP_HEIGHT;
+
+            renderer.shadowMapEnabled = false;
+            renderer.shadowMapSoft = true;
+
+            container.appendChild(renderer.domElement);
+
+            // ambient
+            var ambient = new THREE.AmbientLight(0x444444);
+            sceneThree.add(ambient);
+
+            //shadow map light
+            light = new THREE.SpotLight(0xaaaaaa);
+            light.position.set(0, 500, 250);
+            light.target.position.set(0, 0, 0);
+            light.castShadow = true;
+            sceneThree.add(light);
+
+
+            var  lightB = new THREE.SpotLight(0xaaaaaa);
+            lightB.position.set(-45, 10, 100);
+            lightB.target.position.set(0, 0, 0);
+            lightB.castShadow = true;
+            sceneThree.add(lightB);
+
+            var lightC = new THREE.SpotLight(0xaaaaaa);
+            lightC.position.set(150, 150, 100);
+            lightC.target.position.set(0, 0, 0);
+            lightC.castShadow = true;
+            sceneThree.add(lightC);
+
+
+            var c = 0;
+
+            onResize();
+        }
+
+        function freezeCamera() {
+            cameraControl.freeze = true;
+        }
+
+
+        function onResize() {
+            document.getElementById("three-scene").width = window.innerWidth;
+            document.getElementById("three-scene").height = window.innerHeight;
+
+            if (camera != null) {
+                camera.aspect = (window.innerWidth - 20) / (window.innerHeight - 10);
+                camera.updateProjectionMatrix();
+
+                SCREEN_WIDTH = window.innerWidth;
+                SCREEN_HEIGHT = window.innerHeight - 2 * MARGIN;
+            }
+
+            if (renderer != null) 
+                renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
+
+            cameraControl.viewHalfW = document.offsetWidth / 2;
+            cameraControl.viewHalfH = document.offsetHeight / 2;
+            
+            // Resize open dialog box
+            if( dialog) {
+                userInterface.centerElement(dialog);
+                userInterface.centerElementBottom(introCredits);
+            }
+
+
+
+        }
+
+
+       
+        function draw() {
+
+            if (touchSpeed >= .00001)
+                touchSpeed += (0 - touchSpeed) * .125;
+            else
+                touchSpeed = 0;
+
+
+            if (!lastUpdate) {
+                lastUpdate = new Date().getTime();
+                fps = 0;
+                return;
+            }
+
+            var thisFrameFPS = 1000 / ((now = new Date().getTime()) - lastUpdate);
+            fps += (thisFrameFPS - fps) * .25;
+            lastUpdate = now * 1 - 1;
+
+
+            activeBodies = g_numCubes;
+
+            var cubeLen = cubeArray.length;
+            var tempScore = 0;
+            var removeIndex = -1;
+
+            if (!isGameIntro) {
+                
+                if (time % 33 == 0)
+                    updateScoreDisplay();
+
+                    for (var i = 0; i < cubeArray.length; i++) {
+                        
+                        var mat = g_cubes[i].m_matWorld;
+                        var rot = g_cubes[i].m_rot;
+                        var cube = cubeArray[i];
+                        cube.position.x = mat[3];
+                        cube.position.y = mat[7];
+                        cube.position.z = mat[11];
+                        
+                        cube.quaternion.set(rot[0], rot[1], rot[2], rot[3]);
+
+                        // debug colors for sleeping vars
+                        /*if (g_cubes[i].m_awake == 0)
+                            cube.material.color = new THREE.Color(0x000000);                        
+                        else
+                           cubeArray[i].material.color = new THREE.Color(0xffffff);
+                           */
+                        /*
+                        if (steps == 100)
+                            g_cubes[i].m_awake = 1;*/
+
+
+                        // make sure we're not trying to score bullets
+                        if (time % 33 == 0 && i < g_numCubes - NUM_BULLETS - 1 && FLAGS.COLLECT_POINTS == true) {
+
+                           
+                            if ((Math.abs(cube.position.x) > floorWidth / 2 + 2 || Math.abs(cube.position.z) > floorWidth / 2  + 2 || Math.abs(cube.position.y) > floorWidth ) && cube.data.hasScored == false) {
+                                totalScore += cube.data.pointValue;
+                                currentScore += cube.data.pointValue; //adding here doubles the score
+                                cube.data.hasScored = true;
+                                
+                               
+                                cube.material.color.r = _cubeHitColor.r;
+                                cube.material.color.g = _cubeHitColor.g;
+                                cube.material.color.b = _cubeHitColor.b;
+                                
+                                JSTweener.addTween(cube.material.color, {
+                                    r: _cubeScoreColor.r,
+                                    g: _cubeScoreColor.g,
+                                    b: _cubeScoreColor.b,
+                                    time: 2,
+                                    transition: "linear"});
+                                    
+                                playSound("game/coin.ogg");
+                            }
+
+                            var dx = (cube.position.x  - cube.data.originalX );
+                            var dy = (cube.position.y  - cube.data.originalY );
+                            var dz = (cube.position.z  - cube.data.originalZ );
+
+                            var dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                            if (dist > 60 && cube.data.hasMigrated == false) {
+                                cube.data.hasMigrated = true;
+                                totalScore += cube.data.pointValue;
+                                currentScore += cube.data.pointValue;
+                               
+                                cube.material.color.r = _cubeHitColor.r;
+                                cube.material.color.g = _cubeHitColor.g;
+                                cube.material.color.b = _cubeHitColor.b;
+                                
+                                JSTweener.addTween(cube.material.color, {
+                                    r: _cubeScoreColorSmall.r,
+                                    g: _cubeScoreColorSmall.g,
+                                    b: _cubeScoreColorSmall.b,
+                                    time: .5,
+                                    transition: "linear"
+                                });
+                                
+                            }
+
+                           
+                        }
+                    }
+
+                    if (paused == false) {
+
+                        var divisor = 1100;
+                        if (speedUpPhysics == true)
+                            divisor = 600;
+
+                        ENGINE.Update(ms / divisor);
+
+                        var particle = particles.vertices[currentParticle];
+                        particle.position.x = g_cubes[g_numCubes - currentBullet-1].m_c[0];
+                        particle.position.y = g_cubes[g_numCubes - currentBullet-1].m_c[1];
+                        particle.position.y = g_cubes[g_numCubes - currentBullet-1].m_c[2];
+
+                        // flag the particles for geometry update
+                        particleSystem.geometry.__dirtyVertices = true;
+
+                        for (var i = 0; i < 250; i++) {
+                            bgParticles.vertices[i].position.x += (Math.random() - .5) * .25;
+                            bgParticles.vertices[i].position.y += (Math.random() - .5) * .25;
+                            bgParticles.vertices[i].position.z += (Math.random() - .5) * .25;
+                        }
+                        bgParticleSystem.geometry.__dirtyVertices = true;
+                       
+                    }
+
+
+            } else {
+                // auto rotate camera for first intro
+                automatedCamera = true;
+                //    isRight = true;
+            }
+
+            cameraControl.update(.025);           
+            renderer.render(sceneThree, camera);
+            calculateDT(); 
+            
+
+            if (isFiring == true && reticuleScale > .25) {
+                
+                reticuleScale -= .02;
+                reticule.setAttribute("style", "-moz-transform:scale(" + reticuleScale + ")");
+                if (isChrome)
+                    reticule.setAttribute("style", "-webkit-transform:scale(" + reticuleScale + ")");
+
+            }
+
+
+          
+           currentParticle++;
+           if (currentParticle >= 150)
+               currentParticle = 0;
+        
+           requestAnimationFrame(draw);
+
+           time++;
+        }
+
+
+
+       
+        var fps = 0, current, prevUpdate = (new Date().getTime()) * 1 - 1;
+        var fpsBuffer = 50;
+        var fps2 = 1;
+
+        var fixedDT = 1 / 30;
+
+        function calculateDT() {
+
+            var t1 = new Date().getTime();
+            ms = (t1 - t0);
+
+            t0 = t1;
+
+           
+            var minFPS = 1000 / 60;
+
+            if (ms > minFPS)
+                ms = minFPS;
+        }
+
+      
+      
+
+
+        // TODO: reset these between levels
+        var clickedOnce = false;
+        var currentBullet = 0;
+        var bulletsFired = 0;
+
+        var lastClickTime = null;
+        var reticuleScale;
+        var isFiring = false;
+       
+
+        var isLeft, isRight, isDown, isUp;
+
+        function onKeyDown(e) {
+
+
+            var code;
+            if (!e) var e = window.event;
+
+            if (e.keyCode) code = e.keyCode;
+            else if (e.which) code = e.which;
+
+            if (code == 80) {
+                paused = !paused;
+            }
+
+            /* left */
+            if (code == 37 || code == 65) {
+                isLeft = true;
+            }
+            /* right */
+            if (code == 39 || code == 68) {
+                isRight = true;
+            }
+            /* up */
+            if (code == 38 || code == 87) {
+                isUp = true;
+            }
+            /* down */
+            if (code == 40 || code == 83) {
+                isDown = true;
+            }
+
+            if (code == 32 ) {
+
+                if( isFiring == false )
+                    onFireDown();
+            }
+        }
+
+        function onKeyUp(e) {
+
+            var code;
+            if (!e) var e = window.event;
+
+            if (e.keyCode) code = e.keyCode;
+            else if (e.which) code = e.which;
+
+            /* left */
+            if (code == 37 || code == 65) {
+                isLeft = false;
+            }
+            /* right */
+            if (code == 39 || code == 68) {
+                isRight = false;
+            }
+            /* up */
+            if (code == 38 || code == 87) {
+                isUp = false;
+            }
+            /* down */
+            if (code == 40 || code == 83) {
+                isDown = false;
+            }
+            
+            if (code == 32 ) {                
+                onFireUp(false);
+            }
+            
+        }
+
+
+        function onFireDown(isTouch) {
+
+          
+            lastClickTime = new Date().getTime();
+            // note the FF only implimentation
+            reticuleScale = 2;
+            reticule.setAttribute("style", "-moz-transform:scale(" + reticuleScale + ")");
+            if (isChrome)
+                reticule.setAttribute("style", "-webkit-transform:scale(" + reticuleScale + ")");
+
+            isFiring = true;
+
+
+            if (FLAGS.VIEWING_HIGH_SCORES == true) {
+                userInterface.removeDialog();
+                FLAGS.VIEWING_HIGH_SCORES = false;
+
+                if (FLAGS.PLAYING_GAME == false && FLAGS.HAS_PLAYED_ONCE == true) {                    
+                    window.location.href = window.location.href;
+                }
+
+                return;
+            }
+
+            if (FLAGS.VIEWING_CREDITS == true) {
+                userInterface.removeDialog();
+                FLAGS.VIEWING_CREDITS = false;
+                userInterface.hideIntroCredits();
+                return;
+            }
+
+        }
+
+
+
+        function onFireUp(isTouch) {
+                     
+            if (isTouch == true)
+                endFireFromTouch();
+
+            if (FLAGS.VIEWING_HIGH_SCORES == true || FLAGS.VIEWING_CREDITS == true)
+                return;
+
+            isFiring = false;
+
+            if (_currentLevel.friction !== undefined)
+                g_friction = parseFloat(_currentLevel.friction);
+            else
+                g_friction = .9;
+
+            g_sleepEpsilon = .13;
+
+
+            document.getElementById("call-to-action").style.display = "none";
+
+            if (FLAGS.BULLET_LIMIT_REACHED == true) {
+                return;
+            }
+
+            currentBullet++;
+
+            if (currentBullet == NUM_BULLETS)
+                currentBullet = 0;
+
+            if (currentBullet == 1)
+                setTimeout(beginBulletTime, 500);
+           
+
+            // SET THE TRAJECTORY OF THE BULLET
+            var rotDeg = camera.rotation.y * (180 / Math.PI);
+            var velX, velY, velZ;
+            var bulletCube = g_cubes[g_numCubes - currentBullet - 1];
+
+            // RESET ALL CUBE PROPERTIES
+            bulletCube.m_rot = quat_setFromEuler([0, 0, 0]);
+            bulletCube.m_boxInertia = [1, 0, 0, 0, 0, 1, 0, 0,0, 0, 1, 0,0, 0, 0, 1];
+            bulletCube.m_invInertia = [1, 0, 0, 0,0, 1, 0, 0,0, 0, 1, 0,0, 0, 0, 1];
+            bulletCube.m_matWorld = Mat4();
+            bulletCube.m_rot = new Quaternion();
+
+
+            var velX = (1.5 / reticuleScale) * 100 * Math.cos(degToRad(cameraControl.lon));
+            var velY = (1.5 / reticuleScale) * 4 * (cameraControl.lat + 4);
+            var velZ = (1.5 / reticuleScale) * 100 * Math.sin(degToRad(cameraControl.lon));
+
+          
+            var dx = (cameraControl.target.x - camera.position.x) * (cameraControl.target.x - camera.position.x);
+            var dy = (cameraControl.target.y - camera.position.y) * (cameraControl.target.y - camera.position.y);
+            var dz = (cameraControl.target.z - camera.position.z) * (cameraControl.target.z - camera.position.z);
+
+            // SET THE BULLET 'object' PROPERTIES
+            bulletCube.m_c = [camera.position.x, camera.position.y, camera.position.z];
+            setLinVelocity(g_numCubes - currentBullet - 1, [velX, velY, velZ]);
+            setAngVelocity(g_numCubes - currentBullet - 1, [2, 9, 5]);
+
+
+            reticuleScale = 2;
+            reticule.setAttribute("style", "-moz-transform:scale(" + reticuleScale + ")");
+            if (isChrome)
+                 reticule.setAttribute("style", "-webkit-transform:scale(" + reticuleScale + ")");
+
+            trailOpacity = 1;
+
+            bulletsFired++;
+
+
+            checkBulletLimit();
+        }
+
+
+        function checkBulletLimit() {          
+            if( bulletsFired >= _currentLevel.maxBullets )
+                  FLAGS.BULLET_LIMIT_REACHED = true;
+        }
+
+
+        function mildBulletTime() {
+            paused = true;
+            isRight = true;
+            setTimeout(endBulletTime, 250);
+        }
+
+        function beginBulletTime() {
+
+            if (Config.bullet_time_camera != true)
+                return;
+
+            paused = true;
+            isRight = true;
+
+            setTimeout(endBulletTime, 1000);
+        }
+
+        function endBulletTime() {
+            paused = false;
+            isRight = false;
+        }
+
+
+        var _prevBulletCount, _prevScore;
+
+        function updateScoreDisplay() {
+
+            multipliedScore = totalScore * Config.score_multiplier;
+            multipliedCurrentScore = currentScore * Config.score_multiplier;
+            var scoreArray = multipliedScore.toString().split('');
+           
+            if (_prevScore != multipliedScore) {
+
+                switch (scoreArray.length) {
+                    case 1:
+                        scoreDisplayTop.innerHTML = "Score: 00000" + multipliedScore;
+                        break;
+                    case 2:
+                        scoreDisplayTop.innerHTML = "Score: 0000" + multipliedScore;
+                        break;
+                    case 3:
+                        scoreDisplayTop.innerHTML = "Score: 000" + multipliedScore;
+                        break;
+                    case 4:
+                        scoreDisplayTop.innerHTML = "Score: 00" + multipliedScore;
+                        break;
+                    case 5:
+                        scoreDisplayTop.innerHTML = "Score: 0" + multipliedScore;
+                        break;
+                    case 6:
+                        scoreDisplayTop.innerHTML = "Score: " + multipliedScore;
+                        break;
+                }
+
+                levelProgress.innerHTML = multipliedCurrentScore + " / " + _currentLevel.winningScore;
+
+                var scorePercent = multipliedCurrentScore / _currentLevel.winningScore;
+
+                levelPercent.style.width = scorePercent * 350;
+
+            }
+
+            // only update DOM if changed
+            var currentBulletCount = _currentLevel.maxBullets - bulletsFired;
+            if (_prevBulletCount != currentBulletCount) {
+
+                var bulletString = "";
+                for (i = 0; i < _currentLevel.maxBullets - bulletsFired ; i++) {
+                    bulletString += "<img src='resources/interface/cube-icon.png' />";
+                }
+                _prevBulletCount = currentBulletCount;
+                cubeDisplay.innerHTML = "<br/>" + bulletString;
+               
+            }
+
+
+            if( cubeArray.length == 0 )
+                return;
+
+            // see if all the cubes have scored
+            var migrateCount = 0;
+            for (var i = 0; i < cubeArray.length - 6; i++) {
+
+                var cube = cubeArray[i];
+                if (cube.data.hasScored == true)
+                    migrateCount++;
+            }
+
+            if (migrateCount >= cubeArray.length - 6 && FLAGS.GATHER_LEVEL_SCORE == false) {
+                FLAGS.GATHER_LEVEL_SCORE = true;
+                levelCompleted();
+            }
+
+            // see if you're out of bullets
+            if (FLAGS.BULLET_LIMIT_REACHED == true && FLAGS.GATHER_LEVEL_SCORE == false) {
+                FLAGS.GATHER_LEVEL_SCORE = true;
+                setTimeout(checkScore, 3200);
+            }
+
+            
+
+        }
+
+        function checkScore() {
+
+
+
+            multipliedScore = totalScore * Config.score_multiplier;
+            multipliedCurrentScore = currentScore * Config.score_multiplier;
+
+            if (multipliedCurrentScore >= winningScore) {
+                levelCompleted();
+            } else if (FLAGS.GATHER_LEVEL_SCORE == true) { // make sure they haven't won               
+                setFlag( "COLLECT_POINTS" , false);
+                userInterface.showTryAgain();
+                
+            }
+
+        }
+
+        var currSound = 0, _mute = false;
+        function playSound(url) {
+
+            if (_mute) return;
+            if (navigator.userAgent.toLowerCase().contains("chrome"))
+                return;
+
+            document.getElementById('sound-effect-' + currSound).src = "../_assets/audio/" + url;
+            document.getElementById('sound-effect-' + currSound).play();
+
+            if (currSound < 6)
+                currSound++;
+            else
+                currSound = 0;            
+        }
+
+        var _preventAudioFirstPlay = true;
+        function playBackground(url) {
+            if (_mute)
+                return;
+            
+
+            document.getElementById('sound-background').src = "../_assets/audio/" + url;
+            document.getElementById('sound-background').play();
+            document.getElementById('sound-background').volume = ".5";
+        }
+
+        function mute() {
+
+            _mute = !_mute;
+            if (_mute) {
+                document.getElementById('sound-background').pause();
+
+                for (var i = 0; i < 6 ; i++) {
+                    document.getElementById('sound-effect-' + i).pause();
+                }
+
+            }
+            else
+                document.getElementById('sound-background').play();
+        }
+
+      
+
+</script>
+       
+        <div id="fpsdata">    
+            <div  class="fps-mon"><div id="fps-display">--</div></div>
+           
+        </div>
+
+       
+        <div id="three-scene" style="border: none; display:inline-block; margin-left:-3px; width:100%; position:fixed" ></div>
+
+        <div class="center-container">
+            <div id="file-modal" ></div>
+            <div id="dialog"></div>
+            <div id="dialogInstructions"></div>
+            <div id="bottom-nav"></div>
+        </div>
+
+      
+        <div id="loading-indicator"><img src="resources/loading.gif" /></div>
+       
+        <div id="dragger-wrapper" style="position:absolute; opacity:0;">
+            <div id="dragger" style="position:relative;z-index:5;" ><img width="120" height="120" src="resources/interface/dragger.png" /></div>
+        </div>
+
+
+        
+        <div id="reticule" style="opacity:0;  position:fixed;z-index:1;" ></div>
+
+
+        <div id="top" style="font-size:18px;">
+           
+             <a class="demo button hidden" style="top:-10px;">Choose Level</a>
+
+            <a class="rivertrail right button disabled">RiverTrail Enabled</a>
+            <a style="display:none;" class="high right button" id="high-scores-button">High Scores</a>
+            <a class="instructions right button" id="instructions-button">Instructions</a>
+            <a class="credits right button" id="credits-button" >About</a>
+            <a class="credits right button" id="restart-button">Restart</a>   
+             <a class="mute right button" style="vertical-align: bottom;padding: 0px;"><div id="mute-button"><img src="resources/interface/unmute.gif" width="27" height="27"/></div></a>         
+        </div>
+
+        <div id="intro-backdrop" style="opacity:0;"><img src="resources/interface/backdrop.png" width="100%" height="100%" /></div>
+
+        <div id="intro-credits" style="position:fixed; z-index:555; bottom:10px;opacity:0;"></div>
+
+        <div id="mouse-hide-area"></div>
+       
+        <div id="score-display-top" class="score-display" style="position:absolute; display:inline; top: 10px; left:20px; font-size:30px;"></div>
+
+        <div id="score-display" class="score-display" style="margin-top:10px;">
+            <div id="percent"   style="position:absolute; z-index:300; width:100px; height:20px;margin-left:10px; background-color:#edba1a;opacity:.5;"></div>
+            <div id="total"     style="margin-left:10px; position:absolute; width:350px; height:20px;background-color:#e2df6d;opacity:.5;"></div>
+            <div id="progress"  style="margin-left:10px; position:absolute; width:350px; height:20px;font-size:14px;text-align:center;color:Black;"></div>
+        </div>
+        <div id="cube-display" class="score-display"></div>
+
+        <div id="call-to-action" style="display:none;left:-30px;text-align:center;color:Yellow;width:110%;position:fixed;bottom:48px;background-color:Blue; z-index:88;"> </div>
+
+        <div class="debugger" id="debug" style="position:fixed;z-index:94;background-color:Black;color:Green;font-size:large;bottom:10px;left:10pt;color:#ffffff;display:none"></div>
+      
+
+        <div id="numhits" style="position:fixed;z-index:10;background-color:Black;color:Green;font-size:small;bottom:10px;left:10pt;"></div>
+
+        <div style="position:relative; width:100%;">
+             <div style="position:absolute; right:50%;">
+                    <div id="home-instructions" style="position:absolute;font-size:20px; left:-225px; font-weight :bold; color:Blue; width:450px; top:440px; z-index:10; text-shadow: 0 0 6px #ffffff;"></div>
+                    <div id="home-instructions-bg" style="position:absolute;width:490px;left:-238px;height:200px;top:425px; z-index:9; background-color:#ffffff; opacity:.75;"></div>
+            </div>
+        </div>
+        <audio id="sound-effect-0" src="../_assets/audio/Wood 2x4 01.ogg" ></audio>
+        <audio id="sound-effect-1" src="../_assets/audio/Wood 2x4 01.ogg" ></audio>
+        <audio id="sound-effect-2" src="../_assets/audio/Wood 2x4 01.ogg" ></audio>
+        <audio id="sound-effect-3" src="../_assets/audio/Wood 2x4 01.ogg" ></audio>
+        <audio id="sound-effect-4" src="../_assets/audio/Wood 2x4 01.ogg" ></audio>
+        <audio id="sound-effect-5" src="../_assets/audio/Wood 2x4 01.ogg" ></audio>
+        <audio id="sound-effect-6" src="../_assets/audio/Wood 2x4 01.ogg" ></audio>
+        <audio id="sound-effect-7" src="../_assets/audio/Wood 2x4 01.ogg" ></audio>
+        <audio id="sound-background" src="../_assets/audio/" preload="auto" loop="loop" ></audio>
+
+        <div id="finger1" style="position:fixed;width:30px;height:30px;background-color:#f00;display:none"></div>
+        <div id="finger2" style="position:fixed;width:30px;height:30px;background-color:Green;display:none"></div>
+
+        <div id="debugger" style="z-index:200;position:fixed;bottom:20px;background-color:#ffffff;display:none;">DEBUG</div>
+
+        <div id="automator-cursor" style="z-index:200;position:fixed;background-color:#ffffff;display:inherit;width:3px;height:3px;"></div>
+        <div id="automator-prompt" style="z-index:201;position:fixed;display:inherit;width:500px;top:110px;display:none;font-size:18px;font-weight:bold;"></div>
+ </body>
+</html>
+

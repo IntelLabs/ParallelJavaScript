@@ -1,0 +1,22 @@
+{
+  "id": "b2eec441-20b0-473f-bc41-cf1318228cf4",
+  "title": "underSideWall",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/a undersea 2/brushes/b2eec441-20b0-473f-bc41-cf1318228cf4/LEFT IMAGE.jpg",
+    "_assets/levels/a undersea 2/brushes/b2eec441-20b0-473f-bc41-cf1318228cf4/RIGHT IMAGE.jpg",
+    "_assets/levels/a undersea 2/brushes/b2eec441-20b0-473f-bc41-cf1318228cf4/TOP IMAGE.jpg",
+    "_assets/levels/a undersea 2/brushes/b2eec441-20b0-473f-bc41-cf1318228cf4/BOTTOM IMAGE.jpg",
+    "_assets/levels/a undersea 2/brushes/b2eec441-20b0-473f-bc41-cf1318228cf4/FRONT IMAGE.png",
+    "_assets/levels/a undersea 2/brushes/b2eec441-20b0-473f-bc41-cf1318228cf4/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "a undersea 2",
+  "prefix": "_assets/levels/a undersea 2/brushes/b2eec441-20b0-473f-bc41-cf1318228cf4"
+}

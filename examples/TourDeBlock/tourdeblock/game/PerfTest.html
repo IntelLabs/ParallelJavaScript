@@ -1,0 +1,689 @@
+<html>
+<head></head> 
+    <body onload="loaded();"> 
+   
+   <!-- OCL FILES -->
+
+    <script type="text/javascript" src="../lib/intel/ParallelArray.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/narcissus/jsdefs.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/narcissus/jslex.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/narcissus/jsparse.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/narcissus/jsdecomp.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/definitions.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/helper.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/driver.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/dotviz.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/typeinference.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/rangeanalysis.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/genOCL.js"></script>
+    <script type="application/javascript" src="../lib/intel/jit/compiler/runOCL.js"></script>
+
+    <link href="../com/Designer.css" rel="stylesheet" type="text/css">   
+    <script type="application/javascript" src="../com/UIElement.js"></script>
+   
+
+    <!-- other libraries -->
+    <script type="application/javascript" src="../bulletRTrail.js"></script>
+    <script type="application/javascript" src="../bulletRTrailKernel.js"></script>    
+    <script type="application/javascript" src="../lib/three/build/Three.js"></script>
+    <script type="application/javascript" src="../lib/RequestAnimationFrame.js"></script>
+    <script type="text/javascript">
+
+        var TRACE = false;
+        var DEBUG = false;
+
+        // PHYSICS ENGINE
+        var NUM_CUBES = 10;
+        var paused = false;
+        var NUM_FLOORS = 8;
+        var FLOOR_SIZE = 300;
+
+        // RENDER ENGINE
+        var SHADOW_MAP_WIDTH = 2048;
+        var SHADOW_MAP_HEIGHT = 2048;
+        var MARGIN = 100;
+        var SCREEN_WIDTH = window.innerWidth;
+        var SCREEN_HEIGHT = window.innerHeight - 2 * MARGIN;        
+        var sceneHUD, cameraOrtho, hudMaterial;
+
+        // GAME STATE
+        var bullets = new Array();
+
+    var dynamicsWorld;
+    var v3h = new Vecmath.Vec3(20,20,20);    
+    var b = new Vecmath.Mat4();    
+    var b2 = new Vecmath.Mat4();    
+    var hh = 0;
+    var ot = new Date().getTime();
+    var t0 = new Date().getTime(),
+        ta = 0,
+        oi=0;
+        
+    var y0 = 20;    
+    var fpsS = 'n/a',
+        fpsT = 0,
+        fpsC = 0;
+
+    var ground;
+
+    // FIRST RUN
+    function loaded() {
+
+        var toggleRiverTrail = new UIToggle("RIVER TRAIL JS", "RTrJS", false, setRiverTrue, setRiverFalse );
+        var toggleRiverTrail = new UIToggle("RIVER TRAIL kernel", "RTrJS", false, setRiverKernelTrue, setRiverKernelFalse );
+        "RIVER TRAIL kernel"
+        var toggleRiverTrail = new UIToggle("Use Simplex", "useSimplex", false, setSimplexTrue, setSimplexFalse );
+        var toggleRiverTrail = new UIToggle("Log Debug Info", "logDebug", false, setDebugLogTrue, setDebugLogFalse);
+        var toggleRiverTrail = new UIToggle("Console Trace", "logDebug", false, setTraceTrue, setTraceFalse);
+
+        var collision_config = new Bullet.CollisionConfiguration();
+        var dispatcher = new Bullet.Dispatcher(collision_config),
+            worldAabbMin = new Vecmath.Vec3(-1000, -1000, -1000),
+            worldAabbMax = new Vecmath.Vec3(1000, 1000, 1000);
+        
+        var overlappingPairCache = new Bullet.BroadphaseInterface(
+                    worldAabbMin, worldAabbMax, 0xfffe, 0xffff, 16384, null),
+            constraintSolver = new Bullet.ConstraintSolver();
+
+            dynamicsWorld = new Bullet.CollisionWorld(
+                    dispatcher, overlappingPairCache, constraintSolver, collision_config);
+            dynamicsWorld.setGravity(new Vecmath.Vec3(0, -200, 0));
+
+          
+        initializeScene();
+        initFloor();
+        
+        draw();
+        
+    };
+
+//    var BulletGlobals = new Bullet.BulletGlobals();
+    function setRiverTrue() {
+        dynamicsWorld.setRiverTrail(true);
+    }
+    function setRiverFalse() {
+        dynamicsWorld.setRiverTrail(false);
+    }
+    function setRiverKernelTrue() {
+      dynamicsWorld.setRiverTrailKernel(true);
+    }
+    function setRiverKernelFalse() {
+      dynamicsWorld.setRiverTrailKernel(false);
+    }    
+    function setSimplexTrue() {
+      dynamicsWorld.setSimplex(true);
+    }
+    function setSimplexFalse() {
+      dynamicsWorld.setSimplex(false);
+    }
+    function setDebugLogTrue() {
+        dynamicsWorld.setDebugLog(true);
+        DEBUG = true;
+    }
+    function setDebugLogFalse() {
+        dynamicsWorld.setDebugLog(false);
+        DEBUG = false;
+    }
+    function setInitRTrAlgosTrue() {
+      dynamicsWorld.setInitRTrAlgosTrue(true);
+    }
+    function setTraceTrue() {
+        TRACE = true;
+    }
+    function setTraceFalse() {
+        TRACE = false;
+    }
+
+    var renderer, container, camera,light, cubeArray,sceneThree, cameraControl;
+    
+    // cube size
+    var width = 3.5;
+    var height = 10;
+    var depth = 2;
+
+    function initializeScene() {
+
+        if (DEBUG == true)
+            document.getElementById("debug").style.display = "inherit";
+
+        // gl context
+        container = document.getElementById("three-scene");
+
+        // main scene
+        sceneThree = new THREE.Scene();
+        sceneThree.fog = new THREE.Fog(0xffffff, 10, 200);
+
+        // camera to render the finalScene
+        camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);        
+
+        cameraControl = new THREE.FirstPersonControls(camera);
+        cameraControl.lookSpeed = .0425;
+        cameraControl.noFly = true;
+        cameraControl.lookVertical = true;
+        cameraControl.constrainVertical = true;
+        cameraControl.activeLook = true;
+        cameraControl.movementSpeed = 100;
+        cameraControl.heightMin = 2;
+        cameraControl.heightMax = 4;
+
+        sceneThree.add(camera);
+        camera.position.x = -37;
+        camera.position.y = 2;
+        camera.position.z = 0;
+        camera.lon = 0;
+        camera.lat = 0;
+
+        // open GL render engine
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize(1200, 700);
+        //renderer.sortObjects = true;
+        renderer.setClearColorHex(0xffffff, 1);
+       	
+        // SHADOW MAP			
+        renderer.shadowCameraNear = 3;
+		renderer.shadowCameraFar = camera.far;
+		renderer.shadowCameraFov = 27;
+
+		renderer.shadowMapBias = 0.0049;
+		renderer.shadowMapDarkness = 0.5;
+		renderer.shadowMapWidth = SHADOW_MAP_WIDTH;
+		renderer.shadowMapHeight = SHADOW_MAP_HEIGHT;
+
+		renderer.shadowMapEnabled = true;
+		renderer.shadowMapSoft = true;
+                
+        container.appendChild(renderer.domElement);
+        
+        // ambient
+        var ambient = new THREE.AmbientLight(0x444444);
+        sceneThree.add(ambient);
+
+        //shadow map light
+        light = new THREE.SpotLight(0xaaaaaa);
+        light.position.set(0, 500, 250);
+        light.target.position.set(0, 0, 0);
+        light.castShadow = true;
+        sceneThree.add(light);
+
+        cubeArray = new Array();
+
+        var c = 0;
+
+      
+        // make render cubes
+        for (var i = 0; i < NUM_CUBES; i++) {
+
+            var cubeMaterial = new THREE.MeshPhongMaterial({ color: RGBtoHex( 0, 255 * ( i /NUM_CUBES),.5)   });
+            cubeMaterial.color.a = .5;
+
+            var cubeGeom = new THREE.CubeGeometry(width, height, depth);
+            var cubeMesh = new THREE.Mesh(cubeGeom, cubeMaterial);
+
+            cubeMesh.castShadow = true;
+            cubeMesh.receiveShadow = false;
+            cubeMesh.useQuaternion = true;
+            cubeMesh.autoUpdateMatrix = true;
+            cubeMesh.position.x = (i * 1);
+            
+            sceneThree.add(cubeMesh);
+            cubeArray.push(cubeMesh);           
+        }
+
+        onResize();
+    }
+
+
+    function onResize() {
+        document.getElementById("three-scene").width = window.innerWidth;
+        document.getElementById("three-scene").height = window.innerHeight;
+
+        if (camera != null) {
+            camera.aspect = (window.innerWidth - 20) / (window.innerHeight - 50);
+            camera.updateProjectionMatrix();
+
+            SCREEN_WIDTH = window.innerWidth;
+            SCREEN_HEIGHT = window.innerHeight - 2 * MARGIN;
+        }
+
+        if (renderer != null) renderer.setSize(window.innerWidth - 10, window.innerHeight - 50);
+    }
+    
+    var activeBodies;
+    var time = 0;
+    var q = 0;
+    var shape = new Bullet.BoxShape(new Vecmath.Vec3(width * 4, height * 4, depth * 4));
+
+    var row = 0;
+    var col = 0;
+    var stack = 0;
+
+    var bulletIndex = 0;
+    function draw() {
+        activeBodies = 0;
+      
+        var t1 = new Date().getTime();
+                
+        var ms = (t1 - t0);
+        t0 = t1;
+        
+        fpsT += ms;
+        fpsC++;
+        if (fpsT>=3000) { 
+            fpsS = "" + fpsC * 1000 / fpsT;
+            fpsT = 0;
+            fpsC = 0;
+            var i = fpsS.indexOf(".");
+            if (i!=-1) fpsS = fpsS.substr(0, i + 2);
+        }
+        var minFPS = 1000 / 60;
+        
+        if (ms > minFPS) ms = minFPS;
+
+        ta += ms;
+
+        var c = dynamicsWorld.getNumCollisionObjects();
+
+        if (ta > 10) {
+            if (c < NUM_CUBES + NUM_FLOORS) {
+                
+                // size of body
+                if (q % 15 == 0 && q != 0 ) {
+                    col = 0;
+                    row = 0;
+                    stack +=80;
+
+                }
+
+                var trans = new Bullet.Transform();
+                trans.setIdentity();
+                trans.origin.set3(- 150+ row * 45,26 + stack,-150 + (col *45));
+
+                trans.basis = rotationMatrix(2, .01,.01 );
+
+               
+
+                if (q % 5 == 0) {
+                    col++;
+                    row = 0; 
+                }
+
+                row++;
+
+                var localInertia = new Vecmath.Vec3(1, 1,1);
+                var mass = 1500;
+                shape.calculateLocalInertia(mass, localInertia);
+
+                var cInfo = new Bullet.RigidBodyConstructionInfo(mass, null, shape, localInertia);
+                cInfo.linearDamping = .5;
+                cInfo.angularDamping = .9;
+                cInfo.erp = .5;
+
+                var body = new Bullet.RigidBody(cInfo);
+                body.uniqueId = "cube_" + q;
+                body.setWorldTransform(trans);
+                dynamicsWorld.addRigidBody(body);
+
+            }
+            ta = 0;
+            q++;
+        }
+
+        if( paused == false )
+            dynamicsWorld.stepSimulation1(ms / 1000);        
+        
+     
+        var vf = new Array();
+        var c = dynamicsWorld.getNumCollisionObjects();
+
+        var m = new Bullet.Transform();
+        var transform = new Bullet.Transform();
+
+        bulletIndex = 0;
+
+        var removeIndex = -1;
+
+        // starting at 21 because there are 10 ground objects
+        for (var i = NUM_FLOORS ; i < c; i++) {
+            var colObj = dynamicsWorld.collisionObjects[i];
+
+            if (colObj.isActive())
+                activeBodies++;
+
+            var worldTransform = colObj.getWorldTransform(transform);
+
+            if (i < NUM_CUBES + NUM_FLOORS) {
+
+                // TODO: Can we just update the matrix4 instead? ( will need some conversion from 3x3 to Three native  4x4  ) 
+                cubeArray[i - NUM_FLOORS].position.x = worldTransform.origin.x / 8;
+                cubeArray[i - NUM_FLOORS].position.y = (worldTransform.origin.y / 8) - 3.5;
+                cubeArray[i - NUM_FLOORS].position.z = worldTransform.origin.z / 8;
+                cubeArray[i - NUM_FLOORS].quaternion = rotationToEuler(worldTransform.basis);
+
+
+             /*   cubeArray[i - NUM_FLOORS].scale.x = colObj.extent.x;
+                cubeArray[i - NUM_FLOORS].scale.y = colObj.extent.y;
+                cubeArray[i - NUM_FLOORS].scale.z = colObj.extent.z;*/
+
+            }
+
+/*
+            colObj.collisionShape.extent.set3(10, 10, 10);
+            colObj.collisionShape.halfExtents.set3(5, 5, 5);
+            colObj.collisionShape.implicitShapeDimensions.set3(10, 10, 10);*/
+
+          //  if (i == NUM_FLOORS)
+           //     trace("colObj", colObj.collisionShape);
+           
+            if (colObj.uniqueId.indexOf("sphere") != -1) {
+                bullets[bulletIndex].position.x = worldTransform.origin.x / 8;
+                bullets[bulletIndex].position.y = (worldTransform.origin.y / 8) - 3.5;
+                bullets[bulletIndex].position.z = worldTransform.origin.z / 8;
+                bullets[bulletIndex].quaternion = rotationToEuler(worldTransform.basis);
+                bulletIndex++;
+            }
+
+
+             if(colObj.uniqueId == "sphere_" + bulletIndex  ) {
+            
+                bullets[bulletIndex].position.x = worldTransform.origin.x/8;
+                bullets[bulletIndex].position.y = (worldTransform.origin.y / 8) - 3.5;
+                bullets[bulletIndex].position.z = worldTransform.origin.z / 8;
+                bullets[bulletIndex].quaternion = rotationToEuler(worldTransform.basis);
+            }
+
+        }
+
+
+        if (removeIndex != -1) {
+         //   dynamicsWorld.collisionObjects.splice(removeIndex, 1);
+        }
+
+        camera.updateProjectionMatrix();
+        cameraControl.update(.01);
+        renderer.render(sceneThree, camera);
+
+        calculateFPS();
+
+        if (!paused) {
+            updateDebug();
+            time++;
+        }
+       
+       
+        requestAnimationFrame(draw);
+    }
+
+    var currentBullet = 0;
+    window.onclick = function onClick(e) {
+      
+        if( e.target == document.getElementById("RIVER TRAIL kernel"))
+            return;
+        if( e.target == document.getElementById("RIVER TRAIL JS"))
+            return;
+        if( e.target == document.getElementById("Use Simplex"))
+            return;
+        if (e.target == document.getElementById("Console Trace"))
+            return;
+        if( e.target == document.getElementById("Log Debug Info"))
+            return;
+
+        var sphereShape = new Bullet.BoxShape(new Vecmath.Vec3(20, 20, 20));
+        var trans = new Bullet.Transform();
+        trans.setIdentity();
+        trans.origin.set3(camera.position.x * 8, camera.position.y*8, camera.position.z * 8);
+        var localInertia = new Vecmath.Vec3(0, 0, 0);
+       
+        var mass = 2500;
+        shape.calculateLocalInertia(mass, localInertia);
+        var cInfo = new Bullet.RigidBodyConstructionInfo(mass, null, sphereShape, localInertia);
+      
+        var body = new Bullet.RigidBody(cInfo);
+
+        body.setWorldTransform(trans);
+        body.uniqueId = "sphere_" + currentBullet;
+        dynamicsWorld.addRigidBody(body);
+
+        var velX = 1200 * Math.cos(degToRad(cameraControl.lon));
+        var velY = 1500 * Math.sin(degToRad(cameraControl.lat));
+        var velZ = 1200 * Math.sin(degToRad(cameraControl.lon));
+
+        body.linearVelocity = new Vecmath.Vec3(velX, velY, velZ);
+
+        var sphereMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
+
+        var sphereGeom = new THREE.CubeGeometry(4, 4, 4);
+        var sphereMesh = new THREE.Mesh(sphereGeom, sphereMaterial);
+        sphereMesh.castShadow = true;
+        sphereMesh.receiveShadow = false;
+        sphereMesh.useQuaternion = true;
+        sphereMesh.autoUpdateMatrix = true;
+
+        bullets.push(sphereMesh);
+
+        sceneThree.add(sphereMesh);
+
+        currentBullet++;
+    }
+
+
+
+
+
+    function initFloor() {
+   
+
+        //FLOOR PHYSICS
+        for (var i = 0; i < NUM_FLOORS; i++) {
+        
+            var fWidth = (FLOOR_SIZE / NUM_FLOORS);
+            var fHeight = 20;
+            var fLength = FLOOR_SIZE;
+
+            var posX = (-FLOOR_SIZE / 2) + (i * (FLOOR_SIZE / NUM_FLOORS));
+            var posY = -35;
+            var posZ = 0;
+            
+            var groundShape = new Bullet.BoxShape(new Vecmath.Vec3(fWidth, 20, fLength /2 ));
+            var groundTransform = new Bullet.Transform();
+            groundTransform.setIdentity();
+            groundTransform.origin.set3(posX, posY,posZ);
+            var localInertia = new Vecmath.Vec3(0, 0, 0);
+            var cInfo = new Bullet.RigidBodyConstructionInfo(0, null, groundShape, localInertia);
+            cInfo.linearDamping = .99;
+            cInfo.angularDamping = 0.01;
+            cInfo.erp = .01;
+            var body = new Bullet.RigidBody(cInfo);
+            body.setWorldTransform(groundTransform);
+            body.uniqueId = "floor_" + i;
+            dynamicsWorld.addRigidBody(body);
+            var out = new Vecmath.Vec3();
+            groundShape.getHalfExtentsWithoutMargin(out);
+
+
+            var floorMaterial = new THREE.MeshLambertMaterial({
+                color: RGBtoHex( 255 * ((i + 1) / NUM_FLOORS  ) , .5,.5 )
+            });
+
+          
+            // THE FLOOR PLANE
+            var floorPlane = new THREE.CubeGeometry(fWidth / 8, 5, fLength / 8);
+            floor = new THREE.Mesh(floorPlane, floorMaterial);
+            floor.position.x = posX / 8;
+            floor.position.y = -8.1;
+            floor.position.z = posZ /4;
+            floor.castShadow = false;
+            floor.receiveShadow = true;
+
+            sceneThree.add(floor);
+        }
+        
+    }
+
+
+    function rotationToEuler( basis ) {
+        
+        var quat = new THREE.Quaternion();
+
+        quat.w = Math.sqrt(1 + basis.m00 + basis.m11 + basis.m22) / 2;
+        quat.x = (basis.m21 - basis.m12) / (4 * quat.w);
+        quat.y = (basis.m02 - basis.m20) / (4 * quat.w);
+        quat.z = (basis.m10 - basis.m01) / (4 * quat.w);
+
+        return quat;
+
+	}
+
+
+    function rotationMatrix(heading, attitude, bank) {
+        // Assuming the angles are in radians.
+        var ch = Math.cos(heading);
+        var sh = Math.sin(heading);
+        var ca = Math.cos(attitude);
+        var sa = Math.sin(attitude);
+        var cb = Math.cos(bank);
+        var sb = Math.sin(bank);
+
+        var matrix = new Vecmath.Mat3();
+
+        matrix.m00 = ch * ca;
+        matrix.m01 = sh*sb - ch*sa*cb;
+        matrix.m02 = ch*sa*sb + sh*cb;
+        matrix.m10 = sa;
+        matrix.m11 = ca*cb;
+        matrix.m12 = -ca*sb;
+        matrix.m20 = -sh*ca;
+        matrix.m21 = sh*sa*cb + ch*sb;
+        matrix.m22 = -sh*sa*sb + ch*cb;
+
+        return matrix;
+    }
+
+
+	window.onkeydown = function (e) {
+
+	    var code;
+	    if (!e) var e = window.event;
+
+	    if (e.keyCode) code = e.keyCode;
+	    else if (e.which) code = e.which;
+
+	    if (code == 80) {
+	        paused = !paused;
+	    }
+	}
+
+
+
+    var fps = 0, current, prevUpdate = (new Date) * 1 - 1;
+    var fpsBuffer = 50;
+
+    function calculateFPS() {
+        var thisFrameFPS = 1000 / ((current = new Date) - prevUpdate);
+        fps += (thisFrameFPS - fps) / fpsBuffer;
+        prevUpdate = current;       
+    }
+
+
+    setInterval(function () {
+        var fpsOut = document.getElementById('fps-display');
+        fpsOut.innerHTML = fps.toFixed(1) + " FPS";
+        document.getElementById("bodies-display").innerHTML = activeBodies + " Objects";
+
+    }, 1000); 
+
+
+
+    function degToRad(deg) {
+        var pi = Math.PI;
+        return (deg) * (pi / 180);
+    }
+
+    function RGBtoHex(R,G,B) {return "0x" + toHex(R)+toHex(G)+toHex(B)}
+    function toHex(N) {
+     if (N==null) return "00";
+     N=parseInt(N); if (N==0 || isNaN(N)) return "00";
+     N=Math.max(0,N); N=Math.min(N,255); N=Math.round(N);
+     return "0123456789ABCDEF".charAt((N-N%16)/16)
+          + "0123456789ABCDEF".charAt(N%16);
+    }
+
+
+
+    function trace(p_name, p_value, p_interval) {
+        if (!TRACE)
+            return;
+
+        var doTrace = true;
+
+        if( p_interval != null ) 
+            if (p_interval % time != 0)
+                doTrace = false;
+
+        if (doTrace) {
+
+            try {
+
+                if (p_value != null)
+                    console.log(p_name + " >>> " + JSON.stringify(p_value, "data", "\t"));
+                else
+                    console.log(p_name);
+
+            } catch (err) {
+                console.log(p_name);
+            }
+
+        }
+
+    }
+    
+    var debugArgs = new Array();
+    function debug(p_name, p_value) {
+
+        if (!DEBUG)
+            return;
+
+        var debugItem = new Object();
+        debugItem.name = p_name;
+        debugItem.value = p_value;
+
+        debugArgs.push(debugItem);
+    }
+
+    function updateDebug() {
+
+        var d = document.getElementById("debug");
+        d.innerHTML = "";
+
+        for (var i = 0; i < debugArgs.length; i++) {
+
+            try{
+                d.innerHTML += "<br/>" + debugArgs[i].name + " = " + JSON.stringify(debugArgs[i].value, "data", "\t");
+            } catch(err) {
+                d.innerHTML += "<br/>" + debugArgs[i].name + " = " + debugArgs[i].value;
+            }
+        }
+        debugArgs = new Array();
+    }
+
+
+</script>
+   
+     
+      <div style="opacity:.75;position:fixed;top:0pt;right:0pt;padding:2em;font-family:sans-serif;height:100%;z-index:3;" >    
+          <div  class="fps-mon"><div id="fps-display" style="text-align:right;color:#000000">--</div></div>
+          <div  class="fps-mon"><div id="bodies-display" style="text-align:right;color:#000000">--</div></div>
+     </div>
+       
+      <div id="three-scene" style="border: none; display:inline-block; margin-left:-3px; width:100%; position:fixed" ></div>
+
+      <div id="RTrJS" class="clickable" style="position:fixed;z-index:5; top:30px; left:10px;font-family:courier; font-size: larger;"> </div>
+      
+      <div id="useSimplex" class="clickable" style="position:fixed;z-index:5; top:60px; left:10px;font-family:courier; font-size: larger;"> </div>
+      
+      <div id="logDebug" class="clickable" style="position:fixed;z-index:5; top:90px; left:10px;font-family:courier; font-size: larger;"> </div>
+
+      <div class="debugger" id="debug" style="position:fixed;z-index:10;background-color:Black;color:Green;font-size:large;bottom:10px;left:10pt;color:0xffffff"></div>
+
+
+ </body>
+</html>

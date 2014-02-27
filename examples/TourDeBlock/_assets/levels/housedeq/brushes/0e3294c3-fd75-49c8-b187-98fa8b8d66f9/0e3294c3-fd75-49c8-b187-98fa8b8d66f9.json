@@ -1,0 +1,21 @@
+{
+  "id": "0e3294c3-fd75-49c8-b187-98fa8b8d66f9",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 4.4,
+  "sy": 11.599999999999996,
+  "sz": 34.700000000000223,
+  "rx": 0,
+  "ry": -1.3877787807814457E-17,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/housedeq/brushes/0e3294c3-fd75-49c8-b187-98fa8b8d66f9/LEFT IMAGE.jpg",
+    "_assets/levels/housedeq/brushes/0e3294c3-fd75-49c8-b187-98fa8b8d66f9/RIGHT IMAGE.jpg",
+    "_assets/levels/housedeq/brushes/0e3294c3-fd75-49c8-b187-98fa8b8d66f9/TOP IMAGE.jpg",
+    "_assets/levels/housedeq/brushes/0e3294c3-fd75-49c8-b187-98fa8b8d66f9/BOTTOM IMAGE.jpg",
+    "_assets/levels/housedeq/brushes/0e3294c3-fd75-49c8-b187-98fa8b8d66f9/FRONT IMAGE.jpg",
+    "_assets/levels/housedeq/brushes/0e3294c3-fd75-49c8-b187-98fa8b8d66f9/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "housedeq"
+}

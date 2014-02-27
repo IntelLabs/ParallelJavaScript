@@ -1,0 +1,22 @@
+{
+  "id": "94e60250-1b80-42b9-abf8-1985fa35844a",
+  "title": "",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/FantasyBack001/brushes/94e60250-1b80-42b9-abf8-1985fa35844a/LEFT IMAGE.jpg",
+    "_assets/levels/FantasyBack001/brushes/94e60250-1b80-42b9-abf8-1985fa35844a/RIGHT IMAGE.jpg",
+    "_assets/levels/FantasyBack001/brushes/94e60250-1b80-42b9-abf8-1985fa35844a/TOP IMAGE.jpg",
+    "_assets/levels/FantasyBack001/brushes/94e60250-1b80-42b9-abf8-1985fa35844a/BOTTOM IMAGE.jpg",
+    "_assets/levels/FantasyBack001/brushes/94e60250-1b80-42b9-abf8-1985fa35844a/FRONT IMAGE.png",
+    "_assets/levels/FantasyBack001/brushes/94e60250-1b80-42b9-abf8-1985fa35844a/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "FantasyBack001",
+  "prefix": "_assets/levels/FantasyBack001/brushes/94e60250-1b80-42b9-abf8-1985fa35844a"
+}

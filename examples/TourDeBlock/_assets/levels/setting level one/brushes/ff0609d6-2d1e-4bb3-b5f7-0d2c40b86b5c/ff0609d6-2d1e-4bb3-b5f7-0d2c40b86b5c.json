@@ -1,0 +1,18 @@
+{
+  "id": "ff0609d6-2d1e-4bb3-b5f7-0d2c40b86b5c",
+  "title": "untitled",
+  "mass": "1",
+  "sx": 17.399999999999977,
+  "sy": 10,
+  "sz": 0.39999999999999936,
+  "sourceImages": [
+    "_assets/levels/setting level one/brushes/ff0609d6-2d1e-4bb3-b5f7-0d2c40b86b5c/TOP IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/ff0609d6-2d1e-4bb3-b5f7-0d2c40b86b5c/BOTTOM IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/ff0609d6-2d1e-4bb3-b5f7-0d2c40b86b5c/FRONT IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/ff0609d6-2d1e-4bb3-b5f7-0d2c40b86b5c/BACK IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/ff0609d6-2d1e-4bb3-b5f7-0d2c40b86b5c/FRONT IMAGE.png",
+    "_assets/levels/setting level one/brushes/ff0609d6-2d1e-4bb3-b5f7-0d2c40b86b5c/RIGHT IMAGE.jpg"
+  ],
+  "prefix": "_assets/levels/setting level one/brushes/ff0609d6-2d1e-4bb3-b5f7-0d2c40b86b5c",
+  "levelTitle": "setting level one"
+}

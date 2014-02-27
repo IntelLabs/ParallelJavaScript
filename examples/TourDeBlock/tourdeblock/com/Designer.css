@@ -1,0 +1,505 @@
+﻿#mouse-hide-area
+{
+    margin-top:6%;
+    margin-left:6%;    
+    width:90%;
+    height:70%;      
+    position:fixed;    
+    background-color:#ffffff;
+    opacity:0;
+    z-index:70;
+}
+
+.level-button {
+    
+    
+    
+}
+
+.install-notice{
+     
+    font-family: CooperBlackRegular,Verdana;
+    color: #ff6a00;
+    font-size: 20px;
+    display: none; 
+    width: 400px; 
+    margin-left: 25%; 
+    margin-top:10%;
+    position: fixed;
+    z-index: 55;
+}
+
+.share-item {
+    
+    display: inline-block;
+    
+    
+}
+
+#intro {
+    font-family: CooperBlackRegular,Verdana;
+    color: #3385d9;
+    font-size: 30px;
+    margin-left: 25%;
+    margin-top: 13%;
+    
+     
+}
+
+
+.score-display
+{
+    
+    font-family: CooperBlackRegular,Verdana;
+    position:fixed;
+    left: 12px;
+    top: 48px;
+    z-index:25;
+    font-size:36px;
+    color:#f5f555;
+}
+
+
+body 
+{
+   font-family: Courier;
+}
+
+.ui-horizontal-top
+{
+    height:40px;
+}
+
+.ui-horizontal-bottom
+{
+    height:80px;
+    background-color:#555555;
+    bottom:0px;
+    width:100%;
+    z-index:5;
+    
+}
+
+.ui-button
+{
+    background-color:Blue;
+    opacity:1;
+    color:Black;
+    margin:5px 5px 5px 5px;
+    cursor:Pointer;
+    display:inline;
+    padding:5px;
+}
+
+.ui-toggle
+{
+    background-color:Orange;
+    color:Black;
+    margin:5px 5px 5px 5px;
+    cursor:Pointer;
+    display:inline;
+    padding:5px;
+}
+
+.ui-text-input
+{
+    background-color:Orange;
+    opacity:1;
+    color:Black;
+    margin:5px 5px 5px 5px;
+    display:inline;   
+}
+
+
+
+.ui-divider
+{
+    background-color:Gray;
+    opacity:1;
+    color:Black;
+    width:30px;
+    height:40px;
+    
+    display:inline;
+}
+
+#file-modal 
+{
+    position:fixed;
+    display:none;
+    width: 600px;
+    height:400px;
+    left:50%;
+    margin: 100px 0 0 -300px;
+    background-color:White;
+    color:Black;
+    border:3px;
+    border-color:Black;
+    padding:20px;
+    text-align: left;    
+    z-index:10;    
+}
+
+#close-modal
+{
+    left:50%;
+    margin: 0 0 0 300px;    
+    position:fixed;
+    font-family:Arial;
+    font-size:14px;
+    text-align:right;
+    width:30px;
+}
+
+.shadow {
+    -moz-box-shadow: 3px 3px 10px #000;
+    -webkit-box-shadow: 3px 3px 10px #000;
+    box-shadow: 3px 3px 10px #000;
+}
+
+.shadow-small {
+    -moz-box-shadow: 3px 3px 3px #333;
+    -webkit-box-shadow: 3px 3px 3px #333;
+    box-shadow: 3px 3px 3px #333;
+}
+
+.text-shadow {
+    text-shadow: 4px 2px 2px rgba(0,0,0,0.25);
+}
+
+#highscores {
+    color: #fff;
+    text-align: left;
+    font-family: CooperBlackRegular,Verdana;
+    font-size: 24px;
+    font-weight: normal;
+
+    text-shadow: 1px 2px 2px #333;
+}
+
+#highscores .row {
+    
+}
+
+#highscores .rank {
+    width: 75px;
+    margin-left: 10px;
+    float: left;
+}
+
+#highscores .name {
+    width: 400px;
+    margin-left: 10px;
+    float: left;
+}
+
+#highscores .score {
+    width: 250px;
+    float: right;
+    text-align: right;
+}
+
+
+
+#dialogBox {
+    font-family:CooperBlackRegular,Verdana;
+    font-weight:bold;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+    
+    text-align:center;
+}
+
+#dialogBox, #dialogBoxInstructions {
+    z-index:25;
+    background: -moz-linear-gradient(top,  #0066d0,  #003990);
+    background: -webkit-linear-gradient(top,  #0066d0,  #003990);
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
+}
+
+#dialogBox h2, #dialogBoxInstructions h2 {
+    
+    font-family: CooperBlackRegular,Verdana;
+    text-shadow: 1px 2px 2px #333;
+
+    margin: 0px;
+    padding: 0px;
+    
+    font-size:36px;
+    font-weight: normal;
+    color:#fff;
+}
+
+#dialogBox p {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #3385d9;
+    color: #fff;
+}
+
+#dialogBoxInstructions p {
+    padding: 20px;
+    color: #fff;
+}
+
+#dialog
+{
+    position:fixed;
+    display:none;
+    text-align:center;
+    color:Black;
+
+    padding:20px;
+    text-align: center;    
+    z-index:100;
+
+    width: 850px;
+   
+}
+
+#dialogInstructions
+{
+    position:fixed;
+    display:none;
+   
+    color:Black;
+
+    padding:20px;
+    text-align: center;    
+    z-index:100;
+
+    width: 530px;
+}
+
+#highscoresCollection span {
+    color: #fff;
+    float: left;
+    padding-top: 25px;
+    font-size: 24px;
+    -moz-opacity: 0.6;
+}
+
+#highscoresCollection .submit {
+    float: left;
+}
+
+#highscoresName {
+    height: 66px;
+    width: 250px;
+    margin: 5px 16px 0 16px;
+    border: none;
+    float: left;
+    -moz-border-radius: 8px;
+
+    color: #333;
+    font-size: 18px;
+}
+
+#instructions {
+    
+    margin: 0px auto;
+    width: auto;
+}
+
+#left-arrow {
+    position: absolute;
+    left: 0px;
+    top: 180px;
+}
+
+#right-arrow {
+    position: absolute;
+    right: 0px;
+    top: 180px;
+}
+
+#reticule
+{
+     position:fixed;
+     left:50%;
+     top:50%;
+     margin: -60px 0 0 -60px;
+     
+}
+
+
+.center-container
+{
+    width:100%;
+    text-align:center;
+    z-index:40;
+}
+
+
+#loading-indicator
+{
+    position:fixed;
+    display:none;
+    left:50%;
+    margin: 250px 0 0 -32px;
+    z-index: 20;   
+}
+
+
+#three-scene
+{
+  
+}
+
+.clickable
+{
+    cursor:pointer;   
+}
+
+
+#frame
+{
+    position:fixed;
+    
+    left:0px;
+    top:0px;
+    
+    width:100%;
+    height:100%;
+    
+    z-index:21;
+    
+}
+
+#intro-backdrop
+{   
+    position:fixed;
+    
+    left:0px;
+    top:0px;
+    
+    width:100%;
+    height:100%;
+    
+    z-index:2;
+}
+
+
+#bottom-nav
+{   
+    position:fixed;
+    bottom:12%;
+    z-index:50;
+    opacity:0;    
+}
+
+#levelList {
+    width: 670px;
+    height: 250px;
+    overflow-y: scroll;
+}
+
+#levelList .level {
+    float: left;
+    width: 200px;
+    height: 110px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+#top {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 30;
+    width: 81%;
+
+}
+
+#fpsdata {
+    opacity:.75;
+    position:fixed;
+    top:0pt;
+    right:0pt;
+    padding:12px;
+    font-family:sans-serif;
+    
+    height:100%;
+    z-index:33;
+}
+
+.fps-mon {
+    width: 190px;
+    text-align: right;
+    color: #fff;
+    background-color:Black;
+    opacity:.8;
+    font-size: 22px;
+    font-weight: bold;
+    padding:8px;
+    text-align:center;
+    
+     -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -khtml-border-radius: 7px;
+    border-radius: 7px;    
+   
+}
+
+#fps-display {
+    
+}
+
+#bodies-display {
+    
+}
+
+.right {
+    float: right !important;
+}
+
+
+
+
+.button {
+    
+    
+    background-image:url('../resources/interface/button-gradient.jpg');
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -khtml-border-radius: 7px;
+    border-radius: 7px;    
+    
+    font-size: 11px;
+   
+    display: inline-block;
+    padding: 5px 10px 6px;
+    color: #794100;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+    -moz-box-shadow: 0 1px 3px #999;
+    -moz-box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+    border-bottom: 1px solid rgba(0,0,0,0.2); 
+    border-color:#794100;
+    font-size:medium;
+    position: relative;
+    cursor: pointer;
+    margin:5px;
+}
+
+
+.button.disabled {
+    background-color: #ccc;
+    background-image: none;
+}
+
+.hidden {
+    display: none;
+}

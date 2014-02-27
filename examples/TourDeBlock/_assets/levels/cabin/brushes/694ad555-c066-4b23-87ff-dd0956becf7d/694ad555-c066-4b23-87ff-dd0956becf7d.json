@@ -1,0 +1,21 @@
+{
+  "id": "694ad555-c066-4b23-87ff-dd0956becf7d",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 5.699999999999994,
+  "sy": 2.70000000000002,
+  "sz": 16.299999999999962,
+  "rx": 0,
+  "ry": 1.5600000000000007,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/cabin/brushes/694ad555-c066-4b23-87ff-dd0956becf7d/LEFT IMAGE.jpg",
+    "_assets/levels/cabin/brushes/694ad555-c066-4b23-87ff-dd0956becf7d/RIGHT IMAGE.jpg",
+    "_assets/levels/cabin/brushes/694ad555-c066-4b23-87ff-dd0956becf7d/TOP IMAGE.jpg",
+    "_assets/levels/cabin/brushes/694ad555-c066-4b23-87ff-dd0956becf7d/BOTTOM IMAGE.jpg",
+    "_assets/levels/cabin/brushes/694ad555-c066-4b23-87ff-dd0956becf7d/FRONT IMAGE.jpg",
+    "_assets/levels/cabin/brushes/694ad555-c066-4b23-87ff-dd0956becf7d/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "cabin"
+}

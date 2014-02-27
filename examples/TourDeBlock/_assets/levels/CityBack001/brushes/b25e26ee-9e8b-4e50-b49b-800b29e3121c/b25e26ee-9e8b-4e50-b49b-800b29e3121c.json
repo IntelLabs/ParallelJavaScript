@@ -1,0 +1,21 @@
+{
+  "id": "b25e26ee-9e8b-4e50-b49b-800b29e3121c",
+  "title": "",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 8.3999999999999844,
+  "sy": 10,
+  "sz": 0.099999999999999367,
+  "rx": 0,
+  "ry": 1.5200000000000007,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/CityBack001/brushes/b25e26ee-9e8b-4e50-b49b-800b29e3121c/LEFT IMAGE.jpg",
+    "_assets/levels/CityBack001/brushes/b25e26ee-9e8b-4e50-b49b-800b29e3121c/RIGHT IMAGE.jpg",
+    "_assets/levels/CityBack001/brushes/b25e26ee-9e8b-4e50-b49b-800b29e3121c/TOP IMAGE.jpg",
+    "_assets/levels/CityBack001/brushes/b25e26ee-9e8b-4e50-b49b-800b29e3121c/BOTTOM IMAGE.jpg",
+    "_assets/levels/CityBack001/brushes/b25e26ee-9e8b-4e50-b49b-800b29e3121c/FRONT IMAGE.png",
+    "_assets/levels/CityBack001/brushes/b25e26ee-9e8b-4e50-b49b-800b29e3121c/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "CityBack001"
+}

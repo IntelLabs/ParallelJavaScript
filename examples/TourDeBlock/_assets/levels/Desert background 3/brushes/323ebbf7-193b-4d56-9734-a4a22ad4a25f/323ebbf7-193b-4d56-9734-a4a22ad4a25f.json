@@ -1,0 +1,21 @@
+{
+  "id": "323ebbf7-193b-4d56-9734-a4a22ad4a25f",
+  "title": "",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 53.800000000000495,
+  "sy": 10.399999999999999,
+  "sz": 0.099999999999999367,
+  "rx": 0,
+  "ry": -3.1600000000000019,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/Desert background/brushes/323ebbf7-193b-4d56-9734-a4a22ad4a25f/LEFT IMAGE.jpg",
+    "_assets/levels/Desert background/brushes/323ebbf7-193b-4d56-9734-a4a22ad4a25f/RIGHT IMAGE.jpg",
+    "_assets/levels/Desert background/brushes/323ebbf7-193b-4d56-9734-a4a22ad4a25f/TOP IMAGE.jpg",
+    "_assets/levels/Desert background/brushes/323ebbf7-193b-4d56-9734-a4a22ad4a25f/BOTTOM IMAGE.jpg",
+    "_assets/levels/Desert background/brushes/323ebbf7-193b-4d56-9734-a4a22ad4a25f/FRONT IMAGE.png",
+    "_assets/levels/Desert background/brushes/323ebbf7-193b-4d56-9734-a4a22ad4a25f/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "Desert background"
+}

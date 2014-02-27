@@ -1,0 +1,22 @@
+{
+  "id": "97f3e742-2796-468a-bfcd-8f3aa8e5a397",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 98.799999999998661,
+  "sy": 90.09999999999917,
+  "sz": -6.38378239159465E-16,
+  "rx": 4.7200000000000033,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/SpaceBack001/brushes/97f3e742-2796-468a-bfcd-8f3aa8e5a397/LEFT IMAGE.jpg",
+    "_assets/levels/SpaceBack001/brushes/97f3e742-2796-468a-bfcd-8f3aa8e5a397/RIGHT IMAGE.jpg",
+    "_assets/levels/SpaceBack001/brushes/97f3e742-2796-468a-bfcd-8f3aa8e5a397/TOP IMAGE.jpg",
+    "_assets/levels/SpaceBack001/brushes/97f3e742-2796-468a-bfcd-8f3aa8e5a397/BOTTOM IMAGE.jpg",
+    "_assets/levels/SpaceBack001/brushes/97f3e742-2796-468a-bfcd-8f3aa8e5a397/FRONT IMAGE.png",
+    "_assets/levels/SpaceBack001/brushes/97f3e742-2796-468a-bfcd-8f3aa8e5a397/BACK IMAGE.jpg"
+  ],
+  "title": "untitled2",
+  "levelTitle": "SpaceBack001",
+  "prefix": "_assets/levels/SpaceBack001/brushes/97f3e742-2796-468a-bfcd-8f3aa8e5a397"
+}

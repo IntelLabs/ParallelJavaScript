@@ -1,0 +1,21 @@
+{
+  "id": "2f2b5386-9a7a-46df-bfe8-b76ad200a816",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 2.6999999999999984,
+  "sy": 19.100000000000023,
+  "sz": 18.29999999999999,
+  "rx": 0,
+  "ry": 0,
+  "rz": -2.2507960000000007,
+  "sourceImages": [
+    "_assets/levels/house/brushes/2f2b5386-9a7a-46df-bfe8-b76ad200a816/LEFT IMAGE.jpg",
+    "_assets/levels/house/brushes/2f2b5386-9a7a-46df-bfe8-b76ad200a816/RIGHT IMAGE.jpg",
+    "_assets/levels/house/brushes/2f2b5386-9a7a-46df-bfe8-b76ad200a816/TOP IMAGE.jpg",
+    "_assets/levels/house/brushes/2f2b5386-9a7a-46df-bfe8-b76ad200a816/BOTTOM IMAGE.jpg",
+    "_assets/levels/house/brushes/2f2b5386-9a7a-46df-bfe8-b76ad200a816/FRONT IMAGE.jpg",
+    "_assets/levels/house/brushes/2f2b5386-9a7a-46df-bfe8-b76ad200a816/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "house"
+}

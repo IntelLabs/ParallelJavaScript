@@ -1,0 +1,21 @@
+{
+  "id": "e5fb525e-3f6c-4804-86ad-2f268b7566db",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 3.6999999999999993,
+  "sy": 2.50000000000002,
+  "sz": 7.9999999999999876,
+  "rx": 0.32,
+  "ry": 1.3877787807814457E-17,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/shipwreck/brushes/e5fb525e-3f6c-4804-86ad-2f268b7566db/LEFT IMAGE.jpg",
+    "_assets/levels/shipwreck/brushes/e5fb525e-3f6c-4804-86ad-2f268b7566db/RIGHT IMAGE.jpg",
+    "_assets/levels/shipwreck/brushes/e5fb525e-3f6c-4804-86ad-2f268b7566db/TOP IMAGE.jpg",
+    "_assets/levels/shipwreck/brushes/e5fb525e-3f6c-4804-86ad-2f268b7566db/BOTTOM IMAGE.jpg",
+    "_assets/levels/shipwreck/brushes/e5fb525e-3f6c-4804-86ad-2f268b7566db/FRONT IMAGE.jpg",
+    "_assets/levels/shipwreck/brushes/e5fb525e-3f6c-4804-86ad-2f268b7566db/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "shipwreck"
+}

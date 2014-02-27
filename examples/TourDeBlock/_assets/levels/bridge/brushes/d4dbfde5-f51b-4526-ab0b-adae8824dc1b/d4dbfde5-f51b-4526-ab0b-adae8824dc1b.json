@@ -1,0 +1,21 @@
+{
+  "id": "d4dbfde5-f51b-4526-ab0b-adae8824dc1b",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 1.0999999999999979,
+  "sy": 9.9,
+  "sz": 0.69999999999999929,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/bridge/brushes/d4dbfde5-f51b-4526-ab0b-adae8824dc1b/LEFT IMAGE.jpg",
+    "_assets/levels/bridge/brushes/d4dbfde5-f51b-4526-ab0b-adae8824dc1b/RIGHT IMAGE.jpg",
+    "_assets/levels/bridge/brushes/d4dbfde5-f51b-4526-ab0b-adae8824dc1b/TOP IMAGE.jpg",
+    "_assets/levels/bridge/brushes/d4dbfde5-f51b-4526-ab0b-adae8824dc1b/BOTTOM IMAGE.jpg",
+    "_assets/levels/bridge/brushes/d4dbfde5-f51b-4526-ab0b-adae8824dc1b/FRONT IMAGE.jpg",
+    "_assets/levels/bridge/brushes/d4dbfde5-f51b-4526-ab0b-adae8824dc1b/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "bridge"
+}

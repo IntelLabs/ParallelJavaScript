@@ -1,0 +1,18 @@
+{
+  "id": "brushdefault",
+  "title": "default",
+  "mass": "1",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "sourceImages": [
+    "_assets/levels/waller/brushes/brushdefault/LEFT IMAGE.jpg",
+    "_assets/levels/waller/brushes/brushdefault/RIGHT IMAGE.jpg",
+    "_assets/levels/waller/brushes/brushdefault/TOP IMAGE.jpg",
+    "_assets/levels/waller/brushes/brushdefault/BOTTOM IMAGE.jpg",
+    "_assets/levels/waller/brushes/brushdefault/FRONT IMAGE.jpg",
+    "_assets/levels/waller/brushes/brushdefault/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "waller",
+  "prefix": "_assets/levels/waller/brushes/brushdefault"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "cfd42d6a-8893-4940-a194-1f7689765255",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 5.399999999999995,
+  "sy": 6.5000000000000124,
+  "sz": 5.7999999999999954,
+  "rx": 0,
+  "ry": -1.3877787807814457E-17,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/level2/brushes/cfd42d6a-8893-4940-a194-1f7689765255/LEFT IMAGE.jpg",
+    "_assets/levels/level2/brushes/cfd42d6a-8893-4940-a194-1f7689765255/RIGHT IMAGE.jpg",
+    "_assets/levels/level2/brushes/cfd42d6a-8893-4940-a194-1f7689765255/TOP IMAGE.jpg",
+    "_assets/levels/level2/brushes/cfd42d6a-8893-4940-a194-1f7689765255/BOTTOM IMAGE.jpg",
+    "_assets/levels/level2/brushes/cfd42d6a-8893-4940-a194-1f7689765255/FRONT IMAGE.jpg",
+    "_assets/levels/level2/brushes/cfd42d6a-8893-4940-a194-1f7689765255/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "level2"
+}

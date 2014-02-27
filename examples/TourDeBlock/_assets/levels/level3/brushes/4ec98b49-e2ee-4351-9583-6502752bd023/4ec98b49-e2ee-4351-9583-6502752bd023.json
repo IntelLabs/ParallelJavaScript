@@ -1,0 +1,21 @@
+{
+  "id": "4ec98b49-e2ee-4351-9583-6502752bd023",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 11.299999999999974,
+  "sy": 12.599999999999991,
+  "sz": 11.799999999999974,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/level3/brushes/4ec98b49-e2ee-4351-9583-6502752bd023/LEFT IMAGE.jpg",
+    "_assets/levels/level3/brushes/4ec98b49-e2ee-4351-9583-6502752bd023/RIGHT IMAGE.jpg",
+    "_assets/levels/level3/brushes/4ec98b49-e2ee-4351-9583-6502752bd023/TOP IMAGE.jpg",
+    "_assets/levels/level3/brushes/4ec98b49-e2ee-4351-9583-6502752bd023/BOTTOM IMAGE.jpg",
+    "_assets/levels/level3/brushes/4ec98b49-e2ee-4351-9583-6502752bd023/FRONT IMAGE.jpg",
+    "_assets/levels/level3/brushes/4ec98b49-e2ee-4351-9583-6502752bd023/BACK IMAGE.jpg"
+  ],
+  "title": "f",
+  "levelTitle": "level3"
+}
