@@ -592,7 +592,7 @@
 
             //initAutomator( );
 
-            $.getJSON('../_assets/levelschema.json', { cache: Math.round(Math.random() * 1000) }, function (data) {
+            $.getJSON('../_assets/levelschema.json&callback=?', { cache: Math.round(Math.random() * 1000) }, function (data) {
                 // Store level data
                 Levels = data.levels;
 
@@ -603,11 +603,11 @@
                 setState(States.LOAD_LEVEL);
             });
 
-            $.getJSON('../_assets/HighScores.json', { cache: Math.round( Math.random() * 10000) }, function (data) {
+            $.getJSON('../_assets/HighScores.json&callback=?', { cache: Math.round( Math.random() * 10000) }, function (data) {
                 HighScores = data.scores;
             });
 
-            $.getJSON('../Redirect.aspx?exec=gettoken', { cache: Math.round(Math.random() * 10000) }, function (data) {
+            $.getJSON('../Redirect.aspx?exec=gettoken&callback=?', { cache: Math.round(Math.random() * 10000) }, function (data) {
                 redirect = data.token;
             });
 
@@ -617,7 +617,7 @@
 
 
         function loadConfig(callback) {
-            $.getJSON('../_assets/config.json', {cache:Math.round( Math.random() * 1000)}, function (data) {
+            $.getJSON('../_assets/config.json&callback=?', {cache:Math.round( Math.random() * 1000)}, function (data) {
                 Config = data;
                 initButtons();
                 callback();
