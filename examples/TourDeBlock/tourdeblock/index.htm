@@ -55,6 +55,8 @@
     <script type="text/javascript" src="game/GameLevelLoader.js"></script>
     <script type="text/javascript" src="game/Interface.js"></script>
     <script type="text/javascript" src="game/LevelManagement.js"></script>
+    <script type="text/javascript" src="../_assets/config.js"></script>
+    <script type="text/javascript" src="../_assets/levelSchema.js"></script>
     
     
      <!-- physics cubes -->
@@ -74,7 +76,7 @@
     <script type="text/javascript" src="lib/JSTweener.js"></script>
 
     <!-- supplimental (not required for game) -->
-    <script type="text/javascript" src="supplemental/Automator.js"></script>
+    <!-- <script type="text/javascript" src="supplemental/Automator.js"></script> -->
 
     <!--
     <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
@@ -592,6 +594,12 @@
 
             //initAutomator( );
 
+            Levels = levelSchema_json.levels;
+            var levelName = Levels[0].level;
+            setFlag("LEVEL_TO_LOAD", Levels[0]);
+            setState(States.LOAD_LEVEL);
+
+            /*
             $.getJSON('../_assets/levelschema.json', { cache: Math.round(Math.random() * 1000) }, function (data) {
                 // Store level data
                 Levels = data.levels;
@@ -601,7 +609,8 @@
 
                 setFlag("LEVEL_TO_LOAD", Levels[0]);
                 setState(States.LOAD_LEVEL);
-            });
+                });
+            */
 
             $.getJSON('../_assets/HighScores.json', { cache: Math.round( Math.random() * 10000) }, function (data) {
                 HighScores = data.scores;
@@ -615,7 +624,12 @@
 
         }
 
-
+        function loadConfig(callback) {
+            Config = config_json;
+            initButtons();
+            callback();
+        }
+        /*
         function loadConfig(callback) {
             $.getJSON('../_assets/config.json', {cache:Math.round( Math.random() * 1000)}, function (data) {
                 Config = data;
@@ -623,6 +637,7 @@
                 callback();
             });
         }
+        */
 
         function setupEvents() {
             window.onresize = function(event) {
