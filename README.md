@@ -1,8 +1,7 @@
 ParallelJavaScript
 ==================
 
-This repository contains a collection of example workloads for Parallel JavaScript. 
-We plan to add more workloads over time and welcome contributions.
+This repository contains a collection of example workloads for Parallel JavaScript. You can check out a live version of these examples [here](http://intellabs.github.io/ParallelJavaScript). We plan to add more workloads over time and welcome contributions.
 
 How To Use
 ==========
