@@ -55,8 +55,8 @@
     <script type="text/javascript" src="game/GameLevelLoader.js"></script>
     <script type="text/javascript" src="game/Interface.js"></script>
     <script type="text/javascript" src="game/LevelManagement.js"></script>
-    <script type="text/javascript" src="_assets/config.js"></script>
-    <script type="text/javascript" src="_assets/levelSchema.js"></script>
+    <script type="text/javascript" src="assets/config.js"></script>
+    <script type="text/javascript" src="assets/levelSchema.js"></script>
     
     
      <!-- physics cubes -->
@@ -600,7 +600,7 @@
             setState(States.LOAD_LEVEL);
 
             /*
-            $.getJSON('_assets/levelschema.json', { cache: Math.round(Math.random() * 1000) }, function (data) {
+            $.getJSON('assets/levelschema.json', { cache: Math.round(Math.random() * 1000) }, function (data) {
                 // Store level data
                 Levels = data.levels;
 
@@ -612,7 +612,7 @@
                 });
             */
 
-            $.getJSON('_assets/HighScores.json', { cache: Math.round( Math.random() * 10000) }, function (data) {
+            $.getJSON('assets/HighScores.json', { cache: Math.round( Math.random() * 10000) }, function (data) {
                 HighScores = data.scores;
             });
 
@@ -631,7 +631,7 @@
         }
         /*
         function loadConfig(callback) {
-            $.getJSON('_assets/config.json', {cache:Math.round( Math.random() * 1000)}, function (data) {
+            $.getJSON('assets/config.json', {cache:Math.round( Math.random() * 1000)}, function (data) {
                 Config = data;
                 initButtons();
                 callback();
@@ -1275,7 +1275,7 @@
             if (navigator.userAgent.toLowerCase().contains("chrome"))
                 return;
 
-            document.getElementById('sound-effect-' + currSound).src = "_assets/audio/" + url;
+            document.getElementById('sound-effect-' + currSound).src = "assets/audio/" + url;
             document.getElementById('sound-effect-' + currSound).play();
 
             if (currSound < 6)
@@ -1290,7 +1290,7 @@
                 return;
             
 
-            document.getElementById('sound-background').src = "_assets/audio/" + url;
+            document.getElementById('sound-background').src = "assets/audio/" + url;
             document.getElementById('sound-background').play();
             document.getElementById('sound-background').volume = ".5";
         }
@@ -1381,15 +1381,15 @@
                     <div id="home-instructions-bg" style="position:absolute;width:490px;left:-238px;height:200px;top:425px; z-index:9; background-color:#ffffff; opacity:.75;"></div>
             </div>
         </div>
-        <audio id="sound-effect-0" src="_assets/audio/Wood2x401.ogg" ></audio>
-        <audio id="sound-effect-1" src="_assets/audio/Wood2x401.ogg" ></audio>
-        <audio id="sound-effect-2" src="_assets/audio/Wood2x401.ogg" ></audio>
-        <audio id="sound-effect-3" src="_assets/audio/Wood2x401.ogg" ></audio>
-        <audio id="sound-effect-4" src="_assets/audio/Wood2x401.ogg" ></audio>
-        <audio id="sound-effect-5" src="_assets/audio/Wood2x401.ogg" ></audio>
-        <audio id="sound-effect-6" src="_assets/audio/Wood2x401.ogg" ></audio>
-        <audio id="sound-effect-7" src="_assets/audio/Wood2x401.ogg" ></audio>
-        <audio id="sound-background" src="_assets/audio/" preload="auto"
+        <audio id="sound-effect-0" src="assets/audio/Wood2x401.ogg" ></audio>
+        <audio id="sound-effect-1" src="assets/audio/Wood2x401.ogg" ></audio>
+        <audio id="sound-effect-2" src="assets/audio/Wood2x401.ogg" ></audio>
+        <audio id="sound-effect-3" src="assets/audio/Wood2x401.ogg" ></audio>
+        <audio id="sound-effect-4" src="assets/audio/Wood2x401.ogg" ></audio>
+        <audio id="sound-effect-5" src="assets/audio/Wood2x401.ogg" ></audio>
+        <audio id="sound-effect-6" src="assets/audio/Wood2x401.ogg" ></audio>
+        <audio id="sound-effect-7" src="assets/audio/Wood2x401.ogg" ></audio>
+        <audio id="sound-background" src="assets/audio/" preload="auto"
         loop="loop" ></audio>
 
         <div id="finger1" style="position:fixed;width:30px;height:30px;background-color:#f00;display:none"></div>

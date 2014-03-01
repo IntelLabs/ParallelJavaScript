@@ -251,7 +251,7 @@ function cloneActiveObject(p_replaceActiveObject) {
     activeBrush.rz = activeObject.data.rz;
 
     /* set default images */
-   // var path = "_assets/brushdefault/";
+   // var path = "assets/brushdefault/";
    // activeBrush.sourceImages = activeObject
     
     /*[
@@ -298,7 +298,7 @@ function showImageUploader() {
     doShowUploader = false;
     clearModal();
 
-    var prefix = "_assets\/levels\/" + document.getElementById("TITLE").value + "\/brushes\/" + activeBrush.id;
+    var prefix = "assets\/levels\/" + document.getElementById("TITLE").value + "\/brushes\/" + activeBrush.id;
 
     activeBrush.prefix = prefix;
 

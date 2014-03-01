@@ -25,7 +25,7 @@ function LoadCubeTexture(obj, p_callback, p_isSingleCube, frontFaceOnly, p_makeM
 
         /* create default image if not in data */
         //if (obj.sourceImages[q] == null || obj.sourceImages[q] == undefined) {
-            path = "_assets/brushdefault/";
+            path = "assets/brushdefault/";
             obj.sourceImages[q] = "FRONT IMAGE.jpg";
         //} else {
         //    path = Config.service_path;
@@ -226,15 +226,15 @@ function makeDefaultBrush() {
     defaultBrush.sz = 2;
 
     defaultBrush.sourceImages = [
-        "_assets/brushdefault/LEFT IMAGE.jpg",
-        "_assets/brushdefault/RIGHT IMAGE.jpg",
-        "_assets/brushdefault/TOP IMAGE.jpg",
-        "_assets/brushdefault/BOTTOM IMAGE.jpg",
-        "_assets/brushdefault/FRONT IMAGE.jpg",
-        "_assets/brushdefault/BACK IMAGE.jpg"
+        "assets/brushdefault/LEFT IMAGE.jpg",
+        "assets/brushdefault/RIGHT IMAGE.jpg",
+        "assets/brushdefault/TOP IMAGE.jpg",
+        "assets/brushdefault/BOTTOM IMAGE.jpg",
+        "assets/brushdefault/FRONT IMAGE.jpg",
+        "assets/brushdefault/BACK IMAGE.jpg"
         ];
     defaultBrush.levelTitle = "default";
-    defaultBrush.prefix = "_assets/brushdefault";
+    defaultBrush.prefix = "assets/brushdefault";
 
     
     return defaultBrush;

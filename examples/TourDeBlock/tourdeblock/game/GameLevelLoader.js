@@ -155,7 +155,7 @@ function loadLevelJSON(levelObject) {
     document.getElementById("reticule").setAttribute("style", "-moz-transform:scale(" + reticuleScale + ")");
 
 
-    $.getJSON(Config.service_path + '_assets/levels/' + levelObject.level + '/' + levelObject.level + '.json', function (data) {
+    $.getJSON(Config.service_path + 'assets/levels/' + levelObject.level + '/' + levelObject.level + '.json', function (data) {
         currentLevelJson = data;
 
         if (Config.use_textures == true)
@@ -179,7 +179,7 @@ function loadBrushes() {
             var brushId = currentLevelJson.data[i]["brushId"];
             numBrushes++;
 
-            $.getJSON(Config.service_path + '_assets/levels/' + currentLevelJson.title + "/brushes/" + brushId + "/" + brushId + ".json",
+            $.getJSON(Config.service_path + 'assets/levels/' + currentLevelJson.title + "/brushes/" + brushId + "/" + brushId + ".json",
             function (json, index) {
                 currentlyLoadedBrushes.push(json);
                 numLoadedBrushes++;
@@ -375,7 +375,7 @@ function loadSetJSON(setName) {
     hasLoadedLevel = true;
     buildBackgroundCount = 0;
 
-    $.getJSON(Config.service_path +'_assets/levels/' + setName + '/' + setName + '.json', function (json) {
+    $.getJSON(Config.service_path +'assets/levels/' + setName + '/' + setName + '.json', function (json) {
         setting = json;
         loadSettingBrushes();
     });
@@ -416,7 +416,7 @@ function loadSettingBrushes() {
             var brushId = setting.data[i]["brushId"];
             numBrushes++;
 
-            $.getJSON(Config.service_path + '_assets/levels/' + setting.title + "/brushes/" + brushId + "/" + brushId + ".json",
+            $.getJSON(Config.service_path + 'assets/levels/' + setting.title + "/brushes/" + brushId + "/" + brushId + ".json",
                 function (json, index) {
                     settingBrushes.push(json);
                     numLoadedBrushes++;
