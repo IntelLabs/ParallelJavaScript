@@ -1,0 +1,23 @@
+{
+	"title": "housedeq",
+	"gravity": "-9.8",
+	"data": [
+		{
+			"sourceImages": [],
+			"brushId": "brushdefault",
+			"type": "piece",
+			"mass": "1",
+			"pointValue": 1,
+			"id": 0,
+			"x": 17.5,
+			"y": 9.65,
+			"z": 17.5,
+			"rx": 0,
+			"ry": 0.03999999999999999,
+			"rz": 0,
+			"sx": 3.5,
+			"sy": 18.90000000000002,
+			"sz": 3.7000000000000015
+		}
+	]
+}

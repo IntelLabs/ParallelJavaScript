@@ -1,0 +1,22 @@
+{
+  "id": "7ca2f363-acc1-40de-a449-c15dbb2a3cc0",
+  "title": "",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "assets/levels/ParkBack001/brushes/7ca2f363-acc1-40de-a449-c15dbb2a3cc0/LEFT IMAGE.jpg",
+    "assets/levels/ParkBack001/brushes/7ca2f363-acc1-40de-a449-c15dbb2a3cc0/RIGHT IMAGE.jpg",
+    "assets/levels/ParkBack001/brushes/7ca2f363-acc1-40de-a449-c15dbb2a3cc0/TOP IMAGE.jpg",
+    "assets/levels/ParkBack001/brushes/7ca2f363-acc1-40de-a449-c15dbb2a3cc0/BOTTOM IMAGE.jpg",
+    "assets/levels/ParkBack001/brushes/7ca2f363-acc1-40de-a449-c15dbb2a3cc0/FRONT IMAGE.png",
+    "assets/levels/ParkBack001/brushes/7ca2f363-acc1-40de-a449-c15dbb2a3cc0/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "ParkBack001",
+  "prefix": "assets/levels/ParkBack001/brushes/7ca2f363-acc1-40de-a449-c15dbb2a3cc0"
+}

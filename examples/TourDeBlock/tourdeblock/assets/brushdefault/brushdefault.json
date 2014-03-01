@@ -1,0 +1,18 @@
+﻿{
+  "id": "",
+  "title": "default",
+  "mass": "1",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "sourceImages": [
+    "assets/brushdefault/TOP IMAGE.jpg",
+    "assets/brushdefault/BOTTOM IMAGE.jpg",
+    "assets/brushdefault/FRONT IMAGE.jpg",
+    "assets/brushdefault/BACK IMAGE.jpg",
+    "assets/brushdefault/FRONT IMAGE.png",
+    "assets/brushdefault/RIGHT IMAGE.jpg"
+  ],
+  "levelTitle": "default",
+  "prefix": "assets/assets/brushdefault"
+}

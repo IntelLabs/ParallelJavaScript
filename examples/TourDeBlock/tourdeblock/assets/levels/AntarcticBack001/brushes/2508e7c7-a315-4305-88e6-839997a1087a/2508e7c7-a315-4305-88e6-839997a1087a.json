@@ -1,0 +1,22 @@
+{
+  "id": "2508e7c7-a315-4305-88e6-839997a1087a",
+  "title": "",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "assets/levels/AntarcticBack001/brushes/2508e7c7-a315-4305-88e6-839997a1087a/LEFT IMAGE.jpg",
+    "assets/levels/AntarcticBack001/brushes/2508e7c7-a315-4305-88e6-839997a1087a/RIGHT IMAGE.jpg",
+    "assets/levels/AntarcticBack001/brushes/2508e7c7-a315-4305-88e6-839997a1087a/TOP IMAGE.jpg",
+    "assets/levels/AntarcticBack001/brushes/2508e7c7-a315-4305-88e6-839997a1087a/BOTTOM IMAGE.jpg",
+    "assets/levels/AntarcticBack001/brushes/2508e7c7-a315-4305-88e6-839997a1087a/FRONT IMAGE.png",
+    "assets/levels/AntarcticBack001/brushes/2508e7c7-a315-4305-88e6-839997a1087a/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "AntarcticBack001",
+  "prefix": "assets/levels/AntarcticBack001/brushes/2508e7c7-a315-4305-88e6-839997a1087a"
+}
