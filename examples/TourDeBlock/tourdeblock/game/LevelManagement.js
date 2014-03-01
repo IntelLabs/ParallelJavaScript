@@ -514,7 +514,7 @@ function introBackground() {
 function introCubes() {
 
 
-
+    //floorIndex = cubeArray.length-1;
     for (var i = 0; i < cubeArray.length; i++) {
 
         var cube = cubeArray[i];

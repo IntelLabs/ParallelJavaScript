@@ -25,7 +25,7 @@ function LoadCubeTexture(obj, p_callback, p_isSingleCube, frontFaceOnly, p_makeM
 
         /* create default image if not in data */
         //if (obj.sourceImages[q] == null || obj.sourceImages[q] == undefined) {
-            path = "../_assets/brushdefault/";
+            path = "_assets/brushdefault/";
             obj.sourceImages[q] = "FRONT IMAGE.jpg";
         //} else {
         //    path = Config.service_path;

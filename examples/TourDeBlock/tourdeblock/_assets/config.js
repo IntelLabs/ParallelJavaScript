@@ -5,7 +5,7 @@ var config_json = {
 	"camera_speed":0,
 	"bullet_time_camera":false,
 	"use_textures":true,
-	"service_path":"../",
+	"service_path":"",
 	"rivertrail_enabled": true,
 	"score_multiplier":10,
 	"show_credits":true,

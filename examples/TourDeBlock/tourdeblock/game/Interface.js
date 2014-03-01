@@ -469,7 +469,7 @@ UserInterface.prototype.showLevelPicker = function () {
     preventDialogClose = true;
 
     $.each(Levels, function (i, _level) {
-        levels += '<div id="level-' + i + '" onclick="loadLevelFromList(' + i + ')" class="level" style="background-image: url(../_assets/levels/' + _level.level + '/thumbnail.jpg);"></div>';
+        levels += '<div id="level-' + i + '" onclick="loadLevelFromList(' + i + ')" class="level" style="background-image: url(_assets/levels/' + _level.level + '/thumbnail.jpg);"></div>';
     })
 
     var levelComplete = "<div class='shadow' id='dialogBox' style='display:inline-block;padding:30px;'><img src='resources/interface/title_chooseLevel.png' /><p>" + messageText + "</p><div id='levelList' >" + levels + "</div></div>";
@@ -565,7 +565,7 @@ UserInterface.prototype.collectHighScore = function () {
         complete: function (response) {
             var god = data.stream;
 
-            $.getJSON('../_assets/HighScores.json', { cache: Math.round(Math.random() * 1000) }, function (data) {
+            $.getJSON('_assets/HighScores.json', { cache: Math.round(Math.random() * 1000) }, function (data) {
 
                 HighScores = data.scores;
                 userInterface.showHighScores();
