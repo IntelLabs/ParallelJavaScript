@@ -1,0 +1,22 @@
+{
+  "id": "brushdefault",
+  "title": "default",
+  "mass": "1",
+  "pointValue": 1,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "sourceImages": [
+    "_assets/levels/Difficult/brushes/brushdefault/LEFT IMAGE.jpg",
+    "_assets/levels/Difficult/brushes/brushdefault/RIGHT IMAGE.jpg",
+    "_assets/levels/Difficult/brushes/brushdefault/TOP IMAGE.jpg",
+    "_assets/levels/Difficult/brushes/brushdefault/BOTTOM IMAGE.jpg",
+    "_assets/levels/Difficult/brushes/brushdefault/FRONT IMAGE.jpg",
+    "_assets/levels/Difficult/brushes/brushdefault/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "Difficult",
+  "prefix": "_assets/brushdefault"
+}

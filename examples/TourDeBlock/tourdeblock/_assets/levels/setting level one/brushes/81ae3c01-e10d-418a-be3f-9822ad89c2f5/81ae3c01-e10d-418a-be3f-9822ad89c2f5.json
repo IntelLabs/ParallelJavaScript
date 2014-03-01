@@ -1,0 +1,18 @@
+{
+  "id": "81ae3c01-e10d-418a-be3f-9822ad89c2f5",
+  "title": "tree2",
+  "mass": "1",
+  "sx": 5.5999999999999961,
+  "sy": 10,
+  "sz": 0.39999999999999936,
+  "sourceImages": [
+    "_assets/levels/setting level one/brushes/81ae3c01-e10d-418a-be3f-9822ad89c2f5/TOP IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/81ae3c01-e10d-418a-be3f-9822ad89c2f5/BOTTOM IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/81ae3c01-e10d-418a-be3f-9822ad89c2f5/FRONT IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/81ae3c01-e10d-418a-be3f-9822ad89c2f5/BACK IMAGE.jpg",
+    "_assets/levels/setting level one/brushes/81ae3c01-e10d-418a-be3f-9822ad89c2f5/FRONT IMAGE.png",
+    "_assets/levels/setting level one/brushes/81ae3c01-e10d-418a-be3f-9822ad89c2f5/RIGHT IMAGE.jpg"
+  ],
+  "levelTitle": "setting level one",
+  "prefix": "_assets/levels/setting level one/brushes/81ae3c01-e10d-418a-be3f-9822ad89c2f5"
+}

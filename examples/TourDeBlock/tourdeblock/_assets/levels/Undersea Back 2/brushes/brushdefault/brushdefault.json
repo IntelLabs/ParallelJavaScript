@@ -1,0 +1,21 @@
+{
+  "id": "brushdefault",
+  "title": "default",
+  "mass": "1",
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "sourceImages": [
+    "_assets/levels/Undersea Back 2/brushes/brushdefault/LEFT IMAGE.jpg",
+    "_assets/levels/Undersea Back 2/brushes/brushdefault/RIGHT IMAGE.jpg",
+    "_assets/levels/Undersea Back 2/brushes/brushdefault/TOP IMAGE.jpg",
+    "_assets/levels/Undersea Back 2/brushes/brushdefault/BOTTOM IMAGE.jpg",
+    "_assets/levels/Undersea Back 2/brushes/brushdefault/FRONT IMAGE.jpg",
+    "_assets/levels/Undersea Back 2/brushes/brushdefault/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "Undersea Back 2",
+  "prefix": "_assets/brushdefault"
+}

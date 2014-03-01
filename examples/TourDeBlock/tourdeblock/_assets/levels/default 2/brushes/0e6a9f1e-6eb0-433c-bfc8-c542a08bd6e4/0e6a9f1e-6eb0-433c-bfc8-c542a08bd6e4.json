@@ -1,0 +1,21 @@
+{
+  "id": "0e6a9f1e-6eb0-433c-bfc8-c542a08bd6e4",
+  "title": "blockey",
+  "mass": "1",
+  "pointValue": "1",
+  "sx": 6.3999999999999915,
+  "sy": 11.799999999999994,
+  "sz": 6.2999999999999936,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/default 2/brushes/0e6a9f1e-6eb0-433c-bfc8-c542a08bd6e4/LEFT IMAGE.jpg",
+    "_assets/levels/default 2/brushes/0e6a9f1e-6eb0-433c-bfc8-c542a08bd6e4/RIGHT IMAGE.jpg",
+    "_assets/levels/default 2/brushes/0e6a9f1e-6eb0-433c-bfc8-c542a08bd6e4/TOP IMAGE.jpg",
+    "_assets/levels/default 2/brushes/0e6a9f1e-6eb0-433c-bfc8-c542a08bd6e4/BOTTOM IMAGE.jpg",
+    "_assets/levels/default 2/brushes/0e6a9f1e-6eb0-433c-bfc8-c542a08bd6e4/FRONT IMAGE.jpg",
+    "_assets/levels/default 2/brushes/0e6a9f1e-6eb0-433c-bfc8-c542a08bd6e4/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "default 2"
+}

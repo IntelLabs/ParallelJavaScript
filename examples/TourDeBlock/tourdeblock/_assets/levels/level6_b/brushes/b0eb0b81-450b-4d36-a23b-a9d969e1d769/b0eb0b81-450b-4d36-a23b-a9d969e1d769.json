@@ -1,0 +1,21 @@
+{
+  "id": "b0eb0b81-450b-4d36-a23b-a9d969e1d769",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 5.7999999999999936,
+  "sy": 10.1,
+  "sz": 5.2999999999999972,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/level6/brushes/b0eb0b81-450b-4d36-a23b-a9d969e1d769/LEFT IMAGE.jpg",
+    "_assets/levels/level6/brushes/b0eb0b81-450b-4d36-a23b-a9d969e1d769/RIGHT IMAGE.jpg",
+    "_assets/levels/level6/brushes/b0eb0b81-450b-4d36-a23b-a9d969e1d769/TOP IMAGE.jpg",
+    "_assets/levels/level6/brushes/b0eb0b81-450b-4d36-a23b-a9d969e1d769/BOTTOM IMAGE.jpg",
+    "_assets/levels/level6/brushes/b0eb0b81-450b-4d36-a23b-a9d969e1d769/FRONT IMAGE.jpg",
+    "_assets/levels/level6/brushes/b0eb0b81-450b-4d36-a23b-a9d969e1d769/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "level6"
+}

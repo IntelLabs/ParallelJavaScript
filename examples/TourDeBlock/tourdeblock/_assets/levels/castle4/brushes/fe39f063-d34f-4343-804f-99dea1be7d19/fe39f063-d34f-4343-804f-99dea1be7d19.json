@@ -1,0 +1,21 @@
+{
+  "id": "fe39f063-d34f-4343-804f-99dea1be7d19",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 4.1999999999999993,
+  "sy": 7.20000000000001,
+  "sz": 11.399999999999975,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/castle4/brushes/fe39f063-d34f-4343-804f-99dea1be7d19/LEFT IMAGE.jpg",
+    "_assets/levels/castle4/brushes/fe39f063-d34f-4343-804f-99dea1be7d19/RIGHT IMAGE.jpg",
+    "_assets/levels/castle4/brushes/fe39f063-d34f-4343-804f-99dea1be7d19/TOP IMAGE.jpg",
+    "_assets/levels/castle4/brushes/fe39f063-d34f-4343-804f-99dea1be7d19/BOTTOM IMAGE.jpg",
+    "_assets/levels/castle4/brushes/fe39f063-d34f-4343-804f-99dea1be7d19/FRONT IMAGE.jpg",
+    "_assets/levels/castle4/brushes/fe39f063-d34f-4343-804f-99dea1be7d19/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "castle4"
+}

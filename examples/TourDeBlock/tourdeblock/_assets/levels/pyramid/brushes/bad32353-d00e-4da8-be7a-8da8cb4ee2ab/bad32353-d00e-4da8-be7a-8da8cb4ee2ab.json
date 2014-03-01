@@ -1,0 +1,21 @@
+{
+  "id": "bad32353-d00e-4da8-be7a-8da8cb4ee2ab",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 9.59999999999998,
+  "sy": 9.6000000000000014,
+  "sz": 8.5999999999999854,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/pyramid/brushes/bad32353-d00e-4da8-be7a-8da8cb4ee2ab/LEFT IMAGE.jpg",
+    "_assets/levels/pyramid/brushes/bad32353-d00e-4da8-be7a-8da8cb4ee2ab/RIGHT IMAGE.jpg",
+    "_assets/levels/pyramid/brushes/bad32353-d00e-4da8-be7a-8da8cb4ee2ab/TOP IMAGE.jpg",
+    "_assets/levels/pyramid/brushes/bad32353-d00e-4da8-be7a-8da8cb4ee2ab/BOTTOM IMAGE.jpg",
+    "_assets/levels/pyramid/brushes/bad32353-d00e-4da8-be7a-8da8cb4ee2ab/FRONT IMAGE.jpg",
+    "_assets/levels/pyramid/brushes/bad32353-d00e-4da8-be7a-8da8cb4ee2ab/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "pyramid"
+}

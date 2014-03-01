@@ -1,0 +1,21 @@
+{
+  "id": "brushdefault",
+  "title": "default",
+  "mass": "1",
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "sourceImages": [
+    "_assets/levels/vancetest/brushes/brushdefault/LEFT IMAGE.jpg",
+    "_assets/levels/vancetest/brushes/brushdefault/RIGHT IMAGE.jpg",
+    "_assets/levels/vancetest/brushes/brushdefault/TOP IMAGE.jpg",
+    "_assets/levels/vancetest/brushes/brushdefault/BOTTOM IMAGE.jpg",
+    "_assets/levels/vancetest/brushes/brushdefault/FRONT IMAGE.jpg",
+    "_assets/levels/vancetest/brushes/brushdefault/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "vancetest",
+  "prefix": "_assets/brushdefault"
+}

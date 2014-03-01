@@ -1,0 +1,21 @@
+{
+  "id": "46a67285-376b-4a9c-814f-682ccdfeb088",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 3.2999999999999989,
+  "sy": 9.2000000000000028,
+  "sz": 3.3000000000000012,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/temple/brushes/46a67285-376b-4a9c-814f-682ccdfeb088/LEFT IMAGE.jpg",
+    "_assets/levels/temple/brushes/46a67285-376b-4a9c-814f-682ccdfeb088/RIGHT IMAGE.jpg",
+    "_assets/levels/temple/brushes/46a67285-376b-4a9c-814f-682ccdfeb088/TOP IMAGE.jpg",
+    "_assets/levels/temple/brushes/46a67285-376b-4a9c-814f-682ccdfeb088/BOTTOM IMAGE.jpg",
+    "_assets/levels/temple/brushes/46a67285-376b-4a9c-814f-682ccdfeb088/FRONT IMAGE.jpg",
+    "_assets/levels/temple/brushes/46a67285-376b-4a9c-814f-682ccdfeb088/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "temple"
+}

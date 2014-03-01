@@ -1,0 +1,21 @@
+{
+  "id": "29e97de7-ea44-45b0-8c8a-d41a3b10c9fb",
+  "title": "",
+  "mass": "1",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/russ scene test/brushes/29e97de7-ea44-45b0-8c8a-d41a3b10c9fb/LEFT IMAGE.jpg",
+    "_assets/levels/russ scene test/brushes/29e97de7-ea44-45b0-8c8a-d41a3b10c9fb/RIGHT IMAGE.jpg",
+    "_assets/levels/russ scene test/brushes/29e97de7-ea44-45b0-8c8a-d41a3b10c9fb/TOP IMAGE.jpg",
+    "_assets/levels/russ scene test/brushes/29e97de7-ea44-45b0-8c8a-d41a3b10c9fb/BOTTOM IMAGE.jpg",
+    "_assets/levels/russ scene test/brushes/29e97de7-ea44-45b0-8c8a-d41a3b10c9fb/FRONT IMAGE.png",
+    "_assets/levels/russ scene test/brushes/29e97de7-ea44-45b0-8c8a-d41a3b10c9fb/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "russ scene test",
+  "prefix": "_assets/levels/russ scene test/brushes/29e97de7-ea44-45b0-8c8a-d41a3b10c9fb"
+}

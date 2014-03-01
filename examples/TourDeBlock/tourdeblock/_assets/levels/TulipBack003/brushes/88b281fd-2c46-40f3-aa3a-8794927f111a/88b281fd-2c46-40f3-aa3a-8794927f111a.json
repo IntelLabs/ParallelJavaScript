@@ -1,0 +1,21 @@
+{
+  "id": "88b281fd-2c46-40f3-aa3a-8794927f111a",
+  "title": "",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 3.5,
+  "sy": 5.8000000000000149,
+  "sz": -5.8286708792820718E-16,
+  "rx": 0,
+  "ry": -1.5600000000000007,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/TulipBack003/brushes/88b281fd-2c46-40f3-aa3a-8794927f111a/LEFT IMAGE.jpg",
+    "_assets/levels/TulipBack003/brushes/88b281fd-2c46-40f3-aa3a-8794927f111a/RIGHT IMAGE.jpg",
+    "_assets/levels/TulipBack003/brushes/88b281fd-2c46-40f3-aa3a-8794927f111a/TOP IMAGE.jpg",
+    "_assets/levels/TulipBack003/brushes/88b281fd-2c46-40f3-aa3a-8794927f111a/BOTTOM IMAGE.jpg",
+    "_assets/levels/TulipBack003/brushes/88b281fd-2c46-40f3-aa3a-8794927f111a/FRONT IMAGE.png",
+    "_assets/levels/TulipBack003/brushes/88b281fd-2c46-40f3-aa3a-8794927f111a/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "TulipBack003"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "50bfee90-0195-4a99-a3fd-8dd0e7918146",
+  "title": "stip",
+  "mass": "1",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "sourceImages": [
+    "_assets/levels/waller/brushes/50bfee90-0195-4a99-a3fd-8dd0e7918146/LEFT IMAGE.jpg",
+    "_assets/levels/waller/brushes/50bfee90-0195-4a99-a3fd-8dd0e7918146/RIGHT IMAGE.jpg",
+    "_assets/levels/waller/brushes/50bfee90-0195-4a99-a3fd-8dd0e7918146/TOP IMAGE.jpg",
+    "_assets/levels/waller/brushes/50bfee90-0195-4a99-a3fd-8dd0e7918146/BOTTOM IMAGE.jpg",
+    "_assets/levels/waller/brushes/50bfee90-0195-4a99-a3fd-8dd0e7918146/FRONT IMAGE.jpg",
+    "_assets/levels/waller/brushes/50bfee90-0195-4a99-a3fd-8dd0e7918146/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "waller",
+  "prefix": "_assets/levels/waller/brushes/50bfee90-0195-4a99-a3fd-8dd0e7918146"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "brushdefault",
+  "title": "default",
+  "mass": "1",
+  "sx": 7.3999999999999879,
+  "sy": 20.000000000000036,
+  "sz": 0.49999999999999933,
+  "sourceImages": [
+    "_assets/levels/lincoln/brushes/brushdefault/LEFT IMAGE.jpg",
+    "_assets/levels/lincoln/brushes/brushdefault/RIGHT IMAGE.png",
+    "_assets/levels/lincoln/brushes/brushdefault/TOP IMAGE.jpg",
+    "_assets/levels/lincoln/brushes/brushdefault/BOTTOM IMAGE.jpg",
+    "_assets/levels/lincoln/brushes/brushdefault/FRONT IMAGE.png",
+    "_assets/levels/lincoln/brushes/brushdefault/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "lincoln",
+  "prefix": "_assets/levels/lincoln/brushes/brushdefault",
+  "rx": 0,
+  "ry": 0,
+  "rz": 0
+}

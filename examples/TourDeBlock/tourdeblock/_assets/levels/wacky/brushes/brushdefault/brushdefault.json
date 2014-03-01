@@ -1,0 +1,18 @@
+{
+  "id": "brushdefault",
+  "title": "default",
+  "mass": "1",
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "sourceImages": [
+    "_assets/levels/wacky/brushes/brushdefault/TOP IMAGE.jpg",
+    "_assets/levels/wacky/brushes/brushdefault/BOTTOM IMAGE.jpg",
+    "_assets/levels/wacky/brushes/brushdefault/FRONT IMAGE.jpg",
+    "_assets/levels/wacky/brushes/brushdefault/BACK IMAGE.jpg",
+    "_assets/levels/wacky/brushes/brushdefault/LEFT IMAGE.jpg",
+    "_assets/levels/wacky/brushes/brushdefault/RIGHT IMAGE.jpg"
+  ],
+  "levelTitle": "wacky",
+  "prefix": "_assets/brushdefault"
+}

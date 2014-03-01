@@ -1,0 +1,21 @@
+{
+  "id": "0871ff81-f89b-45ee-b03a-82be3a56307a",
+  "title": "",
+  "mass": "1",
+  "pointValue": "undefined",
+  "sx": 6.3999999999999915,
+  "sy": 5.9000000000000146,
+  "sz": 6.2999999999999936,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/default 2/brushes/0871ff81-f89b-45ee-b03a-82be3a56307a/LEFT IMAGE.jpg",
+    "_assets/levels/default 2/brushes/0871ff81-f89b-45ee-b03a-82be3a56307a/RIGHT IMAGE.jpg",
+    "_assets/levels/default 2/brushes/0871ff81-f89b-45ee-b03a-82be3a56307a/TOP IMAGE.jpg",
+    "_assets/levels/default 2/brushes/0871ff81-f89b-45ee-b03a-82be3a56307a/BOTTOM IMAGE.jpg",
+    "_assets/levels/default 2/brushes/0871ff81-f89b-45ee-b03a-82be3a56307a/FRONT IMAGE.jpg",
+    "_assets/levels/default 2/brushes/0871ff81-f89b-45ee-b03a-82be3a56307a/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "default 2"
+}

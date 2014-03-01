@@ -1,0 +1,21 @@
+{
+  "id": "76a923cd-b7fd-4bc9-afc0-ed1165fdc605",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 3.5,
+  "sy": 10,
+  "sz": 2,
+  "rx": 0,
+  "ry": -1.5600000000000007,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/fountain/brushes/76a923cd-b7fd-4bc9-afc0-ed1165fdc605/LEFT IMAGE.jpg",
+    "_assets/levels/fountain/brushes/76a923cd-b7fd-4bc9-afc0-ed1165fdc605/RIGHT IMAGE.jpg",
+    "_assets/levels/fountain/brushes/76a923cd-b7fd-4bc9-afc0-ed1165fdc605/TOP IMAGE.jpg",
+    "_assets/levels/fountain/brushes/76a923cd-b7fd-4bc9-afc0-ed1165fdc605/BOTTOM IMAGE.jpg",
+    "_assets/levels/fountain/brushes/76a923cd-b7fd-4bc9-afc0-ed1165fdc605/FRONT IMAGE.jpg",
+    "_assets/levels/fountain/brushes/76a923cd-b7fd-4bc9-afc0-ed1165fdc605/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "fountain"
+}

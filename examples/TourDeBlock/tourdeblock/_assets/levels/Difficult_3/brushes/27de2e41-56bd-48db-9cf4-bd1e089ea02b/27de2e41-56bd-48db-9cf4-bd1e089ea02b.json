@@ -1,0 +1,21 @@
+{
+  "id": "27de2e41-56bd-48db-9cf4-bd1e089ea02b",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 5.5999999999999943,
+  "sy": 8.600000000000005,
+  "sz": 5.1999999999999975,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/Difficult/brushes/27de2e41-56bd-48db-9cf4-bd1e089ea02b/LEFT IMAGE.jpg",
+    "_assets/levels/Difficult/brushes/27de2e41-56bd-48db-9cf4-bd1e089ea02b/RIGHT IMAGE.jpg",
+    "_assets/levels/Difficult/brushes/27de2e41-56bd-48db-9cf4-bd1e089ea02b/TOP IMAGE.jpg",
+    "_assets/levels/Difficult/brushes/27de2e41-56bd-48db-9cf4-bd1e089ea02b/BOTTOM IMAGE.jpg",
+    "_assets/levels/Difficult/brushes/27de2e41-56bd-48db-9cf4-bd1e089ea02b/FRONT IMAGE.jpg",
+    "_assets/levels/Difficult/brushes/27de2e41-56bd-48db-9cf4-bd1e089ea02b/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "Difficult"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "367a070c-b6ad-40de-a0d0-424e33c5dc80",
+  "title": "log",
+  "mass": "1",
+  "sx": 27.800000000000125,
+  "sy": 2.30000000000002,
+  "sz": 2.2,
+  "sourceImages": [
+    "_assets/levels/lincoln/brushes/367a070c-b6ad-40de-a0d0-424e33c5dc80/LEFT IMAGE.jpg",
+    "_assets/levels/lincoln/brushes/367a070c-b6ad-40de-a0d0-424e33c5dc80/RIGHT IMAGE.jpg",
+    "_assets/levels/lincoln/brushes/367a070c-b6ad-40de-a0d0-424e33c5dc80/TOP IMAGE.jpg",
+    "_assets/levels/lincoln/brushes/367a070c-b6ad-40de-a0d0-424e33c5dc80/BOTTOM IMAGE.jpg",
+    "_assets/levels/lincoln/brushes/367a070c-b6ad-40de-a0d0-424e33c5dc80/FRONT IMAGE.jpg",
+    "_assets/levels/lincoln/brushes/367a070c-b6ad-40de-a0d0-424e33c5dc80/BACK IMAGE.jpg"
+  ],
+  "levelTitle": "lincoln"
+}

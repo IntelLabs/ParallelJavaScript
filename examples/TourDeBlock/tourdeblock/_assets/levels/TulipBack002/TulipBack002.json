@@ -1,0 +1,40 @@
+{
+	"title": "TulipBack002",
+	"gravity": "-9.8",
+	"data": [
+		{
+			"sourceImages": [],
+			"brushId": "d1f93ded-a3bb-4869-89ed-4ccdc4f73e72",
+			"type": "piece",
+			"mass": "1",
+			"pointValue": "1",
+			"id": 0,
+			"x": 14,
+			"y": 5,
+			"z": 28,
+			"rx": 0,
+			"ry": 0,
+			"rz": 0,
+			"sx": 3.5,
+			"sy": 10,
+			"sz": 2
+		},
+		{
+			"sourceImages": [],
+			"brushId": "",
+			"type": "piece",
+			"mass": "1",
+			"pointValue": "1",
+			"id": 1,
+			"x": 0,
+			"y": 0.1500000000000094,
+			"z": 0,
+			"rx": 0,
+			"ry": 0,
+			"rz": 0,
+			"sx": 1.4999999999999982,
+			"sy": 0.3000000000000188,
+			"sz": 0.09999999999999937
+		}
+	]
+}

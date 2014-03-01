@@ -1,0 +1,21 @@
+{
+  "id": "0da4198a-6029-43fd-8d26-268d70601229",
+  "mass": "1",
+  "pointValue": 1,
+  "sx": 7.099999999999989,
+  "sy": 6.8000000000000114,
+  "sz": 36.200000000000244,
+  "rx": 0,
+  "ry": 0,
+  "rz": 0,
+  "sourceImages": [
+    "_assets/levels/igloo/brushes/0da4198a-6029-43fd-8d26-268d70601229/LEFT IMAGE.jpg",
+    "_assets/levels/igloo/brushes/0da4198a-6029-43fd-8d26-268d70601229/RIGHT IMAGE.jpg",
+    "_assets/levels/igloo/brushes/0da4198a-6029-43fd-8d26-268d70601229/TOP IMAGE.jpg",
+    "_assets/levels/igloo/brushes/0da4198a-6029-43fd-8d26-268d70601229/BOTTOM IMAGE.jpg",
+    "_assets/levels/igloo/brushes/0da4198a-6029-43fd-8d26-268d70601229/FRONT IMAGE.jpg",
+    "_assets/levels/igloo/brushes/0da4198a-6029-43fd-8d26-268d70601229/BACK IMAGE.jpg"
+  ],
+  "title": "",
+  "levelTitle": "igloo"
+}
