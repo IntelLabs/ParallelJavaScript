@@ -160,7 +160,7 @@ function MainLoop() {
     	SimulateCL(userData.cl);
     }
     else if(userData.simMode === PJS_SIM) {
-        SimulatePJS();
+        SimulatePJS(true);
     }
     userData.simSampler.endFrame();
 
