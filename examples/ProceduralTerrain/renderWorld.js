@@ -25,24 +25,19 @@
  *
  */
 
-var ArrayType = TypedObject.ArrayType;
-var StructType = TypedObject.StructType;
-var uint8 = TypedObject.uint8;
-var uint8Clamped = TypedObject.uint8Clamped;
-var float32 = TypedObject.float32;
-var uint32 = TypedObject.uint32;
+var GetImage = function(w, h) {
+    var dataType = TypedObject.uint8Clamped.array(w*h, 4);
+    var img = new dataType();
 
-var PixelType = new StructType({
-    r: uint8Clamped,
-    g: uint8Clamped,
-    b: uint8Clamped,
-    a: uint8Clamped
-});
-var GetImageType = function (pixelType, width_, height_) {
-    var dataType = new ArrayType(new ArrayType(pixelType, width_), height_);
-    var imgType = new StructType({data: dataType, width: uint32, height: uint32}); 
-    return imgType;
-};
+    for(var i = 0; i < w*h; i++) {
+        img[i][0] = 0;
+        img[i][1] = 0;
+        img[i][2] = 0;
+        img[i][3] = 0;
+    }
+    return img;
+}
+
 var wself;
 var World = function() {
     this.xRot = 0;
@@ -56,15 +51,11 @@ var World = function() {
     this.result = null;
     this.PARALLEL = true;
 
-    /*
-    this.w = 212 * 2;
-    this.h =  120 * 2;
-    */
-
-    this.w = 512 * 2;
-    this.h =  240 * 2;
+    this.w = 250 * 2;
+    this.h =  128 * 2;
     this.len = this.w * this.h;
     this.time_elapsed = 0;
+    this.parallelResult = GetImage(this.w, this.h);
 
     this.map = null;
     this.texmap = null;
@@ -186,7 +177,7 @@ World.prototype.init = function() {
 
     setInterval(this.clock.bind(this), 0);
 };
-World.prototype.MineKernel = function (index) {
+World.prototype.MineKernel = function (e, index, c, handle) {
    
     var w = wself.w;
     var h = wself.h;
@@ -280,10 +271,10 @@ World.prototype.MineKernel = function (index) {
         }
     }
 
-    var r = ((col >> 16) & 0xff) * br * ddist / (255 * 255);
-    var g = ((col >> 8) & 0xff) * br * ddist / (255 * 255);
-    var b = ((col) & 0xff) * br * ddist / (255 * 255); 
-    return [r, g, b, 255];
+    handle[0] = ((col >> 16) & 0xff) * br * ddist / (255 * 255);
+    handle[1] = ((col >> 8) & 0xff) * br * ddist / (255 * 255);
+    handle[2] = ((col) & 0xff) * br * ddist / (255 * 255); 
+    handle[3] = 255;
 }
 
 World.prototype.updateTickParams = function () {
@@ -303,10 +294,14 @@ World.prototype.updateTickParams = function () {
 
 World.prototype.renderWorldParallel = function() {
     this.updateTickParams();
-    this.result = Array.buildPar(this.len, this.MineKernel);
+    this.result = this.parallelResult.mapPar(this.MineKernel);
 }
 
-World.prototype.writeWorldtoCanvasContext = function() {
+World.prototype.writeWorldtoCanvasContext_viewStorage = function() {
+    this.pixels.data = new Uint8ClampedArray(TypedObject.storage(this.result).buffer);
+    this.ctx.putImageData(this.pixels, 0, 0);
+}
+World.prototype.writeWorldtoCanvasContext_copy = function() {
     var f_data = this.pixels.data;
     var pa = this.result;
     var p = 0; var le = this.len;
@@ -323,7 +318,7 @@ World.prototype.clock = function () {
     var start_time = Date.now();
     if(this.PARALLEL) {
         this.renderWorldParallel();
-        this.writeWorldtoCanvasContext();
+        this.writeWorldtoCanvasContext_copy();
     }
     else {
         this.renderWorldSequential();
